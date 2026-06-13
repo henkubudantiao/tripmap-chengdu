@@ -131,10 +131,6 @@ taikoo:[
 jiuyanqiao:[
 {name:"安顺廊桥",desc:"成都夜景地标",quote:"「灯光亮起来太美了」「建议晚上7-8点去」",tags:["夜景"]}
 ],
-optional:[
-{name:"建设路小吃街",desc:"评论区两极分化，可选",quote:"「别去建设路浪费时间了」119赞 「巨难吃还贵太商业化了」 「地沟油预制菜一条街」",tags:["可选","避坑"]},
-{name:"人民公园 鹤鸣茶社",desc:"最出名但人多，可选",quote:"「鹤鸣人多，聊天没有秘密可行」20赞 「人蛮多的」",tags:["可选","喝茶"]}
-]
 };
 
 function st(id,shops,title){
@@ -248,12 +244,9 @@ function ov(){
   '<div class="card" onclick="go(4)"><div class="name"><span class="dot" style="background:#34c759"></span>D4 三星堆+浣花溪+九眼桥</div><div class="desc">三星堆博物馆 浣花溪喝茶 太古里 九眼桥夜景</div></div>'+
   '<div class="card" onclick="go(5)"><div class="name"><span class="dot" style="background:#8e8e93"></span>D5 天府起飞</div><div class="desc">最后一逛 13:30出发 17:00飞机</div></div>'+
   '</div>'+
-  '<div class="section-head">住宿安排</div>'+
-  '<div class="card"><div class="name">D1/D2：成华区双桥路249号附18号东城小居</div><div class="desc">地铁2号线沿线</div></div>'+
-  '<div class="card"><div class="name">D3：都江堰市北街38号</div><div class="desc">都江堰古城内，步行可达景区</div></div>'+
-  '<div class="card"><div class="name">D4/D5：锦江区正成 财富ID-1号楼-2单元</div><div class="desc">春熙路/太古里附近</div></div>'+
+  
   '<div class="section-head">提前预约清单</div>'+
-  '<div class="card"><div class="desc"><strong>三星堆博物馆</strong> 6月19日 70元/人<br>微信搜索 三星堆博物馆 小程序<br><br><strong>都江堰景区</strong> 6月18日 80元/人<br>关注 都江堰景区 公众号<br><br><strong>城际列车</strong> 12306提前买票</div></div>'+
+  '<div class="card"><div class="desc"><strong>① 三星堆博物馆</strong><br>📅 6月19日（D4）· 💰 70元/人 · ⏱ 3小时<br>📱 微信搜索"三星堆博物馆"小程序→选6月19日购票<br>⚠️ 必须提前预约！现场不售票<br><br><strong>② 都江堰景区</strong><br>📅 6月18日（D3）· 💰 80元/人 · ⏱ 3-4小时<br>📱 关注"都江堰景区"公众号→在线购票<br>⚠️ 建议提前1天预约<br><br><strong>③ 成都→都江堰 城际列车</strong><br>📅 6月18日早上出发<br>💰 约15元/人（犀浦→离堆公园）<br>📱 12306 APP提前购票<br><br><strong>④ 都江堰→三星堆 打车</strong><br>📅 6月19日早上出发<br>💰 约100-120元（60km，1小时）</div></div>'+
   '<div class="section-head">避坑提醒（评论区实测）</div>'+
   '<div class="warn"><strong>建设路</strong>：「别去建设路浪费时间了」119赞 / 「巨难吃还贵太商业化了」 / 「地沟油预制菜一条街」</div>'+
   '<div class="warn"><strong>都江堰驼子饭店</strong>：「那么拉胯的味道」45赞 / 「真的很难吃千万不要去」19赞</div>'+
@@ -264,7 +257,7 @@ function ov(){
   '<div class="warn"><strong>芳草街某店</strong>：「坑得一逼，难吃不说东西还不新鲜，而且还死贵」8赞</div>'+
   '<div class="warn"><strong>点将台烧烤</strong>：「炸的太干了，基本没啥炭烤的香味了，距离远不值得专门去」3赞</div>'+
   backup_html+'<div class="section-head">数据来源（201条笔记+1438条评论）</div>'+
-  st("xhs_all",XHS.map(function(x){return{name:x.title,desc:x.likes+"赞"}}),"全部高赞笔记");
+  '<div class="card" style="line-height:2.2">'+XHS.map(function(x){return '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span style="font-size:13px">'+x.title+'</span><button class="btn xhs" style="font-size:11px;padding:3px 8px" onclick="copyUrl(\''+xu(x.id)+'\')">'+x.likes+'赞</button></div>'}).join("")+'</div>';
 }
 
 var map=L.map("map",{center:[30.66,104.06],zoom:11,zoomControl:false});
