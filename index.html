@@ -4,31 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>成都 · 都江堰 · 三星堆 — 5天攻略 v5.0</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
 :root{--bg:#fff;--bg2:#f5f5f7;--text:#1d1d1f;--text2:#86868b;--text3:#aeaeb2;--accent:#0071e3;--red:#ff3b30;--orange:#ff9500;--green:#34c759;--blue:#007aff;--purple:#af52de;--sep:rgba(60,60,67,.12);--r:8px;--shadow:0 1px 3px rgba(0,0,0,.06)}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC",sans-serif;background:var(--bg2);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}a{color:var(--accent);text-decoration:none}
 #map{width:100%;height:35vh;min-height:240px;position:sticky;top:0;z-index:100}
 .tabs{display:flex;gap:5px;padding:10px 12px;overflow-x:auto;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);position:sticky;top:35vh;z-index:102;border-bottom:.5px solid var(--sep);scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
-.tab{flex-shrink:0;padding:6px 14px;border-radius:980px;border:none;background:var(--bg2);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}.tab.active{background:var(--accent);color:#fff}
+.tab{flex-shrink:0;padding:6px 14px;border-radius:980px;border:none;background:var(--bg2);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}.tab:active{transform:scale(.96)}.tab.active{background:var(--accent);color:#fff}
 .content{max-width:680px;margin:0 auto;padding:12px 14px 40px;position:relative;z-index:1;background:var(--bg2)}
-.hero{text-align:center;padding:24px 16px 16px}.hero h1{font-size:24px;font-weight:700}.hero .sub{font-size:15px;color:var(--text2);margin-top:4px}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}.info-card{background:var(--bg);border-radius:12px;padding:12px;box-shadow:var(--shadow)}.info-card .label{font-size:11px;font-weight:600;color:var(--text2)}.info-card .value{font-size:14px;font-weight:600}
-.section-head{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;padding:16px 0 6px}
-.day-head{padding:16px 0 10px}.day-head h2{font-size:20px;font-weight:700}.day-head p{font-size:14px;color:var(--text2)}
+.hero{text-align:center;padding:24px 16px 16px}.hero h1{font-size:24px;font-weight:700;line-height:1.15}.hero .sub{font-size:15px;color:var(--text2);margin-top:4px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}.info-card{background:var(--bg);border-radius:12px;padding:12px;box-shadow:var(--shadow)}.info-card .label{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.02em;margin-bottom:4px}.info-card .value{font-size:14px;font-weight:600;line-height:1.35}
+.section-head{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.03em;padding:16px 0 6px}
+.day-head{padding:16px 0 10px}.day-head h2{font-size:20px;font-weight:700}.day-head p{font-size:14px;color:var(--text2);margin-top:2px}
 .route-bar{background:var(--bg);border-radius:var(--r);padding:10px 12px;margin-bottom:12px;box-shadow:var(--shadow);font-size:12px;color:var(--text2);line-height:1.7;white-space:pre-line}.route-bar strong{color:var(--text)}
 .timeline{position:relative;padding-left:22px}.timeline::before{content:'';position:absolute;left:6px;top:16px;bottom:16px;width:1.5px;background:var(--sep)}
 .tl-item{position:relative;margin-bottom:8px}.tl-dot{position:absolute;left:-18px;top:14px;width:9px;height:9px;border-radius:50%;z-index:1;box-shadow:0 0 0 2.5px var(--bg2)}.tl-dot.food{background:var(--red)}.tl-dot.spot{background:var(--blue)}.tl-dot.hotel{background:var(--orange)}.tl-dot.drink{background:var(--purple)}.tl-dot.transport{background:var(--text3)}
-.card{background:var(--bg);border-radius:var(--r);padding:12px 14px;box-shadow:var(--shadow);cursor:pointer}.card .time{font-size:11px;font-weight:600;color:var(--text3)}.card .name{font-size:16px;font-weight:600;margin:2px 0 3px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}.card .desc{font-size:13px;color:var(--text2);line-height:1.45}
+.card{background:var(--bg);border-radius:var(--r);padding:12px 14px;box-shadow:var(--shadow);transition:box-shadow .2s;cursor:pointer}.card:active{box-shadow:0 4px 14px rgba(0,0,0,.08)}.card .time{font-size:11px;font-weight:600;color:var(--text3)}.card .name{font-size:16px;font-weight:600;margin:2px 0 3px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}.card .desc{font-size:13px;color:var(--text2);line-height:1.45}
 .badge{display:inline-flex;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px}.badge.food{background:rgba(255,59,48,.1);color:var(--red)}.badge.spot{background:rgba(0,122,255,.1);color:var(--blue)}.badge.drink{background:rgba(175,82,222,.1);color:var(--purple)}
+.budget{display:inline-block;margin-top:4px;padding:2px 8px;background:var(--bg2);border-radius:var(--r);font-size:11px;color:var(--text2)}
 .links{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:3px;padding:6px 10px;border-radius:var(--r);font-size:12px;font-weight:600;border:none;cursor:pointer;text-decoration:none!important;line-height:1.3}.btn.nav{background:var(--accent);color:#fff}.btn.xhs{background:#ff2442;color:#fff}.btn.copy{background:var(--green);color:#fff}
-.details{margin-top:8px;padding-top:8px;border-top:.5px solid var(--sep);font-size:12px;color:var(--text2);line-height:1.55;display:none}.details.show{display:block}
+.btn{display:inline-flex;align-items:center;gap:3px;padding:6px 10px;border-radius:var(--r);font-size:12px;font-weight:600;border:none;cursor:pointer;text-decoration:none!important;transition:filter .2s;line-height:1.3}.btn:active{filter:brightness(.9)}.btn.nav{background:var(--accent);color:#fff}.btn.xhs{background:#ff2442;color:#fff}.btn.copy{background:var(--green);color:#fff}
+.details{margin-top:8px;padding-top:8px;border-top:.5px solid var(--sep);font-size:12px;color:var(--text2);line-height:1.55}.details.closed{display:none}
 .shop-toggle{background:var(--bg);border-radius:var(--r);padding:10px 14px;box-shadow:var(--shadow);margin-top:8px;cursor:pointer;display:flex;align-items:center;justify-content:space-between}.shop-toggle .arrow{transition:transform .2s;font-size:12px;color:var(--text3)}.shop-toggle.open .arrow{transform:rotate(90deg)}
 .shop-list{display:none;margin-top:6px}.shop-list.show{display:block}
 .shop-item{background:var(--bg);border-radius:var(--r);padding:10px 12px;margin-bottom:6px;box-shadow:var(--shadow);font-size:12px;line-height:1.6}
 .shop-item .shop-name{font-size:14px;font-weight:600;margin-bottom:4px}.shop-item .shop-desc{color:var(--text2);margin-bottom:4px}.shop-item .shop-quote{font-style:italic;color:var(--text3);border-left:2px solid var(--sep);padding-left:8px;margin:4px 0}.shop-item .dishes{margin-top:4px;padding:4px 8px;background:var(--bg2);border-radius:var(--r)}.shop-item .dishes strong{color:var(--red)}
 .shop-item .xhs-link{display:inline-flex;align-items:center;gap:3px;margin-top:6px;padding:4px 8px;background:#ff2442;color:#fff;border-radius:var(--r);font-size:11px;font-weight:600;cursor:pointer}
+.as-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}.as-overlay.show{opacity:1;pointer-events:auto}
+.as-sheet{width:100%;max-width:420px;padding:0 8px 34px;transform:translateY(100%);transition:transform .3s cubic-bezier(.22,1,.36,1)}.as-overlay.show .as-sheet{transform:translateY(0)}
+.as-group{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);border-radius:14px;overflow:hidden;margin-bottom:8px}.as-group .as-item{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;font-size:17px;color:#007aff;font-weight:500;border:none;background:none;width:100%;cursor:pointer}.as-group .as-item+.as-item{border-top:.5px solid rgba(0,0,0,.12)}.as-group .as-item:active{background:rgba(0,0,0,.06)}.as-cancel{font-weight:600}
 .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;padding:10px 20px;border-radius:980px;font-size:14px;z-index:99999;opacity:0;transition:opacity .3s;pointer-events:none}.toast.show{opacity:1}
 </style>
 </head>
@@ -37,15 +43,84 @@
 <div class="tabs" id="tabs"></div>
 <div class="content" id="content"></div>
 <div class="toast" id="toast"></div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const HOTEL_BASE={name:'市二医院/牛市口',lat:30.663,lng:104.082};
-const HOTEL_D2={name:'都江堰南桥',lat:30.998,lng:103.651};
+// ════════ HOTELS ════════
+const HOTEL_BASE={name:'市二医院/牛市口附近',lat:30.663,lng:104.082};
+const HOTEL_D2={name:'都江堰南桥附近',lat:30.998,lng:103.651};
+
+// ════════ XHS LINKS ════════
+const XHS=[
+  {id:'6784dd5b000000000b0209ce',title:'太实用啦💟成都玉林路美食三刷全攻略',likes:'6863'},
+  {id:'66075c7a0000000013024df1',title:'成都人民公园鹤鸣茶社｜来喝茶🫖🍵',likes:'6144'},
+  {id:'66d09985000000001d0392ca',title:'成都芳草街！！人均60➕的穷鬼漂亮饭！！！',likes:'4940'},
+  {id:'67501d50000000000201a01b',title:'成都夜游citywalk，望平街-九眼桥超详细攻略',likes:'4697'},
+  {id:'628323f40000000001028405',title:'成都，你心中TOP1的串串店是哪家？',likes:'4531'},
+  {id:'6a1617050000000035022c63',title:'参见成都竹荪鱿鱼鸡汤串串女王！！',likes:'4164'},
+  {id:'68d252d0000000001301afff',title:'来成都别去网红店❌10年+平价老字号不香吗',likes:'3814'},
+  {id:'696bacfd000000002203bafe',title:'成都玉林路📍砂锅串串大王👑',likes:'3627'},
+  {id:'642075bc0000000011012a4a',title:'不要让我求你们去玉林菜市好吗',likes:'3457'},
+  {id:'66ed3ffe0000000012011fec',title:'成都玉林路这样吃没白来！全程无广土著整理',likes:'3295'},
+  {id:'698d7ea5000000000b0108c6',title:'成都玉林路Citywalk🚶不绕路攻略✅',likes:'3030'},
+  {id:'660a9a4f000000001a016b53',title:'芳草街新开的小食堂…确实有被惊喜到😭😭！！',likes:'2290'},
+  {id:'676e6197000000000800e44c',title:'成都芳草街！！一周吃5次的遵义炒鸡！！！',likes:'1906'},
+  {id:'684a9e35000000002202d713',title:'成都芳草街！！独栋木屋餐厅🛖🛖！！',likes:'1869'},
+  {id:'68b176e0000000001c03023d',title:'详解成都九眼桥为什么没有九个眼➕游玩攻略',likes:'1929'},
+  {id:'64b397cb0000000016025a6b',title:'成都喝茶攻略｜来碗成都盖碗茶🍵',likes:'1852'},
+  {id:'68202196000000000303d1a4',title:'比起春熙路，我更推荐成都这条citywalk路线!',likes:'1850'},
+  {id:'669aaeb00000000025014430',title:'成都喝茶🍵/鹤鸣茶社',likes:'1729'},
+];
+
 function xhsUrl(id){return'https://www.xiaohongshu.com/explore/'+id}
-function xhsBtn(id,label){return`<a href="${xhsUrl(id)}" target="_blank" class="btn xhs">📕 ${label||'小红书'}</a>`}
-function copyText(t){navigator.clipboard.writeText(t).then(()=>{const el=document.getElementById('toast');el.textContent='已复制 ✓';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2000)})}
+function xhsBtn(id,label){
+  return`<a href="${xhsUrl(id)}" target="_blank" class="btn xhs">📕 ${label||'小红书'}</a>`
+}
+function copyBtn(url){
+  return`<button class="btn copy" onclick="event.stopPropagation();copyText('${url}')">📋 复制链接</button>`
+}
+function copyText(t){navigator.clipboard.writeText(t).then(()=>showToast('已复制链接 ✓'))}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+
+// ════════ SHOP DATA ════════
+const SHOPS={
+  fanghua:[
+    {name:'UID Cafe',desc:'芳华街最火的咖啡店，工业风',quote:'「豆子自己烘的，手冲很稳」',tags:['咖啡'],url:'66d09985000000001d0392ca'},
+    {name:'白夜花神·诗空间',desc:'诗人翟永明开的文艺空间',quote:'「成都文艺地标，拍照出片」',tags:['咖啡','文艺'],url:'66d09985000000001d0392ca'},
+    {name:'一介·巷子里',desc:'藏在巷子里的社区咖啡',quote:'「适合发呆，dirty好喝」',tags:['咖啡'],url:'66d09985000000001d0392ca'},
+    {name:'小堂堂',desc:'老社区里的甜品店',quote:'「提拉米苏绝了，老板很佛」',tags:['甜品'],url:'66d09985000000001d0392ca'},
+  ],
+  yulin_market:[
+    {name:'王妈手撕烤兔',desc:'玉林综合市场排队王',quote:'「每次去都要排20分钟，但值得」「五香味最经典，肉嫩入味」',tags:['兔肉'],dishes:'五香兔头 ¥12/个、麻辣兔腿 ¥15/个、手撕烤兔 ¥38/半只',url:'642075bc0000000011012a4a'},
+    {name:'老成都冒菜',desc:'市场里的老店，本地人天天吃',quote:'「比外面的冒菜正宗太多」「人均20吃到撑」',tags:['冒菜'],dishes:'牛肉冒菜、毛肚冒菜、素菜拼盘',url:'642075bc0000000011012a4a'},
+    {name:'叶婆婆钵钵鸡',desc:'红油钵钵鸡，冷吃串串',quote:'「红油很香，藤椒味也好吃」「荤素都是6毛一串」',tags:['钵钵鸡'],dishes:'红油底、藤椒底、毛肚、藕片、土豆',url:'642075bc0000000011012a4a'},
+    {name:'甘记肥肠粉',desc:'市场里的早餐首选',quote:'「粉条劲道，肥肠洗得干净」「加个节子才完整」',tags:['粉'],dishes:'肥肠粉 ¥12、加节子 ¥3、锅盔 ¥5',url:'642075bc0000000011012a4a'},
+    {name:'王婆荞面',desc:'老成都荞面，冬天吃暖心',quote:'「荞面很正宗，酸辣粉也不错」',tags:['面'],url:'642075bc0000000011012a4a'},
+  ],
+  yulin_road:[
+    {name:'蜀堰老妈砂锅串串',desc:'玉林总店，本地人认可的串串白月光',quote:'「读书时期吃到上班」「人均五六十，没餐位费」「可以团购，超大腰花才6元」「⚠️ 要早点去，晚了要排队」',tags:['串串'],dishes:'腰花、牛肉、毛肚、土豆、藕片，让老板打碟子！',url:'696bacfd000000002203bafe'},
+    {name:'飘香小馆',desc:'玉林路的川菜馆，本地人聚餐',quote:'「回锅肉很地道」「鱼香肉丝下饭」',tags:['川菜'],dishes:'回锅肉、鱼香肉丝、麻婆豆腐',url:'6784dd5b000000000b0209ce'},
+    {name:'竹荪鱿鱼鸡汤串串',desc:'成都串串新宠，汤底鲜美',quote:'「汤底太鲜了！竹荪吸满汤汁」「鱿鱼很嫩」',tags:['串串'],dishes:'竹荪鱿鱼鸡汤锅底、牛肉、毛肚',url:'6a1617050000000035022c63'},
+    {name:'遵义炒鸡',desc:'芳草街隐藏美食',quote:'「一周吃5次都不腻」「鸡肉嫩，辣椒香」',tags:['炒鸡'],url:'676e6197000000000800e44c'},
+    {name:'小酒馆',desc:'赵雷《成都》里的小酒馆',quote:'「来成都必须打卡」「驻唱还不错」「酒一般，氛围好」',tags:['酒吧'],url:'67501d50000000000201a01b'},
+  ],
+  huanhua:[
+    {name:'浣花溪公园·坝坝茶',desc:'公园里的露天茶馆，竹椅子盖碗茶',quote:'「本地人最爱的喝茶地方」「环境比人民公园好，人少」「盖碗茶15-30元」',tags:['茶'],dishes:'竹叶青、碧潭飘雪、盖碗花茶 ¥15-30',url:'64b397cb0000000016025a6b'},
+    {name:'杜甫草堂旁·蜀风雅韵',desc:'看川剧变脸，喝茶体验',quote:'「变脸表演震撼」「边喝茶边看戏」',tags:['茶','表演'],url:'64b397cb0000000016025a6b'},
+  ],
+  wenhua:[
+    {name:'文化公园·鹤鸣茶社',desc:'百年老茶馆，比人民公园更本地',quote:'「竹椅子上坐一下午」「盖碗茶15-30元」「本地老头老太太在这摆龙门阵」',tags:['茶'],dishes:'盖碗花茶、竹叶青',url:'669aaeb00000000025014430'},
+    {name:'文化公园·百花潭',desc:'公园里的小湖，安静',quote:'「适合发呆，拍照好看」',tags:['景'],url:'669aaeb00000000025014430'},
+  ],
+  jiuyanqiao:[
+    {name:'安顺廊桥',desc:'成都夜景地标，灯光亮起很美',quote:'「灯光亮起来太美了」「桥上可以看府南河夜景」「建议晚上7-8点去」',tags:['夜景'],url:'68b176e0000000001c03023d'},
+    {name:'九眼桥酒吧街',desc:'成都夜生活一条街',quote:'「氛围很好」「精酿啤酒不错」',tags:['酒吧'],url:'67501d50000000000201a01b'},
+  ],
+};
+
 function shopToggle(id,shops,title){
-  let h=`<div class="shop-toggle" onclick="toggleShop('${id}')"><span>📍 ${title}（${shops.length}家）</span><span class="arrow">▸</span></div><div class="shop-list" id="${id}">`;
+  let h=`<div class="shop-toggle" onclick="toggleShop('${id}')"><span>📍 ${title}（${shops.length}家）</span><span class="arrow">▸</span></div>`;
+  h+=`<div class="shop-list" id="${id}">`;
   shops.forEach(s=>{
     h+=`<div class="shop-item"><div class="shop-name">${s.name}</div><div class="shop-desc">${s.desc}</div>`;
     if(s.quote)h+=`<div class="shop-quote">${s.quote}</div>`;
@@ -53,174 +128,200 @@ function shopToggle(id,shops,title){
     if(s.url)h+=`<div class="xhs-link" onclick="event.stopPropagation();window.open('${xhsUrl(s.url)}')">📕 查看小红书原文</div>`;
     h+=`</div>`;
   });
-  return h+`</div>`;
+  h+=`</div>`;
+  return h;
 }
-function toggleShop(id){const el=document.getElementById(id);el.classList.toggle('show');el.previousElementSibling.classList.toggle('open')}
-const SHOPS={
-  fanghua:[
-    {name:'UID Cafe',desc:'芳华街最火的咖啡店，工业风',quote:'「豆子自己烘的，手冲很稳」',url:'66d09985000000001d0392ca'},
-    {name:'白夜花神·诗空间',desc:'诗人翟永明开的文艺空间',quote:'「成都文艺地标，拍照出片」',url:'66d09985000000001d0392ca'},
-    {name:'一介·巷子里',desc:'藏在巷子里的社区咖啡',quote:'「适合发呆，dirty好喝」',url:'66d09985000000001d0392ca'},
-    {name:'小堂堂',desc:'老社区里的甜品店',quote:'「提拉米苏绝了，老板很佛」',url:'66d09985000000001d0392ca'},
-  ],
-  yulin_market:[
-    {name:'王妈手撕烤兔',desc:'玉林综合市场排队王',quote:'「每次去都要排20分钟，但值得」「五香味最经典」',dishes:'五香兔头¥12/个、麻辣兔腿¥15/个',url:'642075bc0000000011012a4a'},
-    {name:'叶婆婆钵钵鸡',desc:'红油钵钵鸡，冷吃串串',quote:'「红油很香，荤素都是6毛一串」',dishes:'红油底、藤椒底、毛肚、藕片',url:'642075bc0000000011012a4a'},
-    {name:'甘记肥肠粉',desc:'市场里的早餐首选',quote:'「粉条劲道，加个节子才完整」',dishes:'肥肠粉¥12、加节子¥3、锅盔¥5',url:'642075bc0000000011012a4a'},
-    {name:'老成都冒菜',desc:'市场里的老店',quote:'「比外面的冒菜正宗太多，人均20吃到撑」',url:'642075bc0000000011012a4a'},
-  ],
-  yulin_road:[
-    {name:'蜀堰老妈砂锅串串',desc:'玉林总店，本地人认可的串串白月光',quote:'「读书时期吃到上班」「人均五六十」「可以团购，超大腰花才6元」',dishes:'腰花、牛肉、毛肚、土豆，让老板打碟子！',url:'696bacfd000000002203bafe'},
-    {name:'竹荪鱿鱼鸡汤串串',desc:'成都串串新宠，汤底鲜美',quote:'「汤底太鲜了！竹荪吸满汤汁」',dishes:'竹荪鱿鱼鸡汤锅底、牛肉、毛肚',url:'6a1617050000000035022c63'},
-    {name:'遵义炒鸡',desc:'芳草街隐藏美食',quote:'「一周吃5次都不腻」「鸡肉嫩，辣椒香」',url:'676e6197000000000800e44c'},
-    {name:'飘香小馆',desc:'玉林路川菜馆',quote:'「回锅肉很地道」「鱼香肉丝下饭」',dishes:'回锅肉、鱼香肉丝、麻婆豆腐',url:'6784dd5b000000000b0209ce'},
-    {name:'小酒馆',desc:'赵雷《成都》里的小酒馆',quote:'「来成都必须打卡」「驻唱还不错」',url:'67501d50000000000201a01b'},
-  ],
-  huanhua:[
-    {name:'浣花溪公园·坝坝茶',desc:'公园里的露天茶馆',quote:'「本地人最爱的喝茶地方」「环境比人民公园好，人少」',dishes:'竹叶青、碧潭飘雪、盖碗花茶¥15-30',url:'64b397cb0000000016025a6b'},
-    {name:'杜甫草堂旁·蜀风雅韵',desc:'看川剧变脸，喝茶体验',quote:'「变脸表演震撼」「边喝茶边看戏」',url:'64b397cb0000000016025a6b'},
-  ],
-  wenhua:[
-    {name:'文化公园·鹤鸣茶社',desc:'百年老茶馆，比人民公园更本地',quote:'「竹椅子上坐一下午」「盖碗茶15-30元」',dishes:'盖碗花茶、竹叶青',url:'669aaeb00000000025014430'},
-    {name:'文化公园·百花潭',desc:'公园里的小湖，安静',quote:'「适合发呆，拍照好看」',url:'669aaeb00000000025014430'},
-  ],
-  jiuyanqiao:[
-    {name:'安顺廊桥',desc:'成都夜景地标',quote:'「灯光亮起来太美了」「建议晚上7-8点去」',url:'68b176e0000000001c03023d'},
-    {name:'九眼桥酒吧街',desc:'成都夜生活一条街',quote:'「氛围很好」「精酿啤酒不错」',url:'67501d50000000000201a01b'},
-  ],
-};
+function toggleShop(id){const el=document.getElementById(id);const t=el.previousElementSibling;el.classList.toggle('show');t.classList.toggle('open');}
+
+// ════════ DAYS ════════
 const DAYS=[
   {id:0,label:'总览',color:'#0071e3'},
-  {id:1,label:'D1·到达',date:'6月16日',title:'芳华街→芳草街→玉林深度游',color:'#ff9500',locations:[
+  {id:1,label:'D1·到达',date:'6月16日',title:'芳华街→芳草街→玉林深度游',color:'#ff9500',
+   locations:[
     {name:'成都东站',lat:30.631,lng:104.157,type:'transport',time:'15:00',desc:'到达成都'},
-    {name:'酒店（市二医院/牛市口）',lat:30.663,lng:104.082,type:'hotel',time:'16:00',desc:'放下行李',detail:'🏨 推荐住宿区域：市二医院/牛市口一带\n地铁2号线沿线，去哪都方便\n老成都氛围，生活气息浓',xhs:[{id:'67b2d122000000001703b89d',label:'住宿参考'}]},
-    {name:'芳华街',lat:30.640,lng:104.055,type:'spot',time:'17:00',desc:'成都最文艺的街',detail:'芳华街在武侯区，老社区改造的文艺小街\n💬 评论精选：\n• 「比宽窄巷子有意思多了」\n• 「每家店都很有调调，拍照绝了」',xhs:[{id:'66d09985000000001d0392ca',label:'芳华街攻略'}]},
-    {name:'芳草街',lat:30.642,lng:104.053,type:'spot',time:'18:00',desc:'紧挨芳华街，更安静',xhs:[{id:'660a9a4f000000001a016b53',label:'芳草街攻略'}]},
-    {name:'玉林综合市场',lat:30.636,lng:104.057,type:'food',time:'19:00',desc:'本地人的菜市场，美食天堂',detail:'💬 评论精选：\n• 「王妈手撕烤兔排队20分钟但值得」\n• 「叶婆婆钵钵鸡红油很香」\n• 「人均30吃到撑」',xhs:[{id:'642075bc0000000011012a4a',label:'玉林菜市'}]},
-    {name:'玉林路',lat:30.638,lng:104.058,type:'drink',time:'20:30',desc:'赵雷《成都》里的玉林路',detail:'🍢 蜀堰老妈砂锅串串\n💬 人均五六十，没餐位费\n⚠️ 要早点去，晚了要排队',xhs:[{id:'696bacfd000000002203bafe',label:'玉林串串'},{id:'6784dd5b000000000b0209ce',label:'玉林美食'}]}
-  ]},
-  {id:2,label:'D2·都江堰',date:'6月17日',title:'千年水利，夜宿古城',color:'#007aff',locations:[
+    {name:'酒店（市二医院/牛市口）',lat:30.663,lng:104.082,type:'hotel',time:'16:00',desc:'放下行李',
+     detail:'🏨 推荐住宿区域：市二医院/牛市口一带\n地铁2号线沿线，去哪都方便\n老成都氛围，生活气息浓\n\n💬 小红书评论精选：\n• 「住在玉林路附近，出门就是美食」\n• 「地铁2号线很方便，去东站、犀浦都直达」\n• 「比太古里那边安静多了，本地人多」',
+     xhs:[{id:'67b2d122000000001703b89d',label:'住宿参考'}]},
+    {name:'芳华街',lat:30.640,lng:104.055,type:'spot',time:'17:00',desc:'成都最文艺的街',
+     detail:'芳华街在武侯区，老社区改造的文艺小街\n咖啡店、甜品店、文创小店扎堆\n\n💬 小红书评论精选：\n• 「比宽窄巷子有意思多了，都是本地年轻人」\n• 「每家店都很有调调，拍照绝了」\n• 「建议下午3-5点去，光线最好」',
+     xhs:[{id:'66d09985000000001d0392ca',label:'芳华街攻略'}]},
+    {name:'芳草街',lat:30.642,lng:104.053,type:'spot',time:'18:00',desc:'紧挨芳华街，更安静',
+     detail:'芳草街和芳华街是"姐妹街"\n更安静，更本地化\n\n💬 小红书评论精选：\n• 「芳草街比芳华街更安静」\n• 「有几家vintage店很宝藏」\n• 「巷子里的小馆子很好吃」',
+     xhs:[{id:'660a9a4f000000001a016b53',label:'芳草街攻略'}]},
+    {name:'玉林综合市场',lat:30.636,lng:104.057,type:'food',time:'19:00',desc:'本地人的菜市场，美食天堂',
+     detail:'玉林综合市场是成都最接地气的美食聚集地\n\n💬 小红书评论精选：\n• 「王妈手撕烤兔排队20分钟但值得」\n• 「叶婆婆钵钵鸡红油很香」\n• 「甘记肥肠粉加个节子才完整」\n• 「人均30吃到撑」',
+     xhs:[{id:'642075bc0000000011012a4a',label:'玉林菜市攻略'}]},
+    {name:'玉林路',lat:30.638,lng:104.058,type:'drink',time:'20:30',desc:'赵雷《成都》里的玉林路',
+     detail:'🍢 蜀堰老妈砂锅串串（玉林总店）\n💬 评论区实测：人均五六十，没餐位费\n可以团购，超大腰花才6元\n⚠️ 要早点去，晚了要排队',
+     xhs:[{id:'696bacfd000000002203bafe',label:'玉林串串'},{id:'6784dd5b000000000b0209ce',label:'玉林美食攻略'}]}
+   ]},
+  {id:2,label:'D2·都江堰',date:'6月17日',title:'千年水利，夜宿古城',color:'#007aff',
+   locations:[
     {name:'犀浦站',lat:30.755,lng:103.982,type:'transport',time:'08:00',desc:'地铁2号线到犀浦，换乘城际列车'},
-    {name:'都江堰景区',lat:31.003,lng:103.647,type:'spot',time:'09:30',desc:'世界文化遗产',detail:'🎫 门票¥80\n💬 全程步行不用坐车\n路线：离堆公园站→松茂古道→二王庙→安澜索桥→鱼嘴→飞沙堰→宝瓶口→南桥',xhs:[{id:'696a09e7000000000a02d949',label:'都江堰攻略'}]},
+    {name:'都江堰景区',lat:31.003,lng:103.647,type:'spot',time:'09:30',desc:'世界文化遗产',
+     detail:'🎫 门票¥80\n📱 预约：关注"都江堰景区"公众号\n\n💬 评论区实测：\n• 全程步行不用坐车\n• 路线：离堆公园站→仰卧广场→灌县古城→玉垒山广场→松茂古道→二王庙→安澜索桥→鱼嘴→飞沙堰→宝瓶口→南桥\n• 松茂古道工作日人少拍照出片',
+     xhs:[{id:'696a09e7000000000a02d949',label:'都江堰攻略'}]},
     {name:'灌县古城',lat:30.997,lng:103.653,type:'spot',time:'12:00',desc:'比宽窄巷子更原生态'},
-    {name:'都江堰午餐',lat:31.000,lng:103.652,type:'food',time:'12:30',desc:'赵卖面/方凉粉/尤兔头',xhs:[{id:'67ab202c0000000018007ab1',label:'都江堰美食'}]},
+    {name:'都江堰午餐',lat:31.000,lng:103.652,type:'food',time:'12:30',desc:'赵卖面/方凉粉/尤兔头',
+     xhs:[{id:'67ab202c0000000018007ab1',label:'都江堰美食'}]},
     {name:'南桥',lat:30.999,lng:103.650,type:'spot',time:'14:00',desc:'岷江上的廊桥'},
     {name:'都江堰住宿',lat:30.998,lng:103.651,type:'hotel',time:'18:00',desc:'南桥附近'},
     {name:'南桥蓝眼泪',lat:30.999,lng:103.650,type:'spot',time:'20:30',desc:'晚上灯光亮起'}
-  ]},
-  {id:3,label:'D3·三星堆',date:'6月18日',title:'古蜀文明+九眼桥夜游',color:'#af52de',locations:[
+   ]},
+  {id:3,label:'D3·三星堆',date:'6月18日',title:'古蜀文明+九眼桥夜游',color:'#af52de',
+   locations:[
     {name:'都江堰→广汉',lat:30.998,lng:103.647,type:'transport',time:'08:30',desc:'城际列车回犀浦，再前往三星堆'},
-    {name:'三星堆博物馆',lat:30.992,lng:104.203,type:'spot',time:'10:30',desc:'20世纪最伟大的考古发现之一',detail:'🎫 门票¥70，小程序预约\n💬 建议8点前到排队\n必看：青铜大立人像、金面具、金杖、青铜神树',xhs:[{id:'6991c9450000000015030661',label:'三星堆攻略'}]},
+    {name:'三星堆博物馆',lat:30.992,lng:104.203,type:'spot',time:'10:30',desc:'20世纪最伟大的考古发现之一',
+     detail:'🎫 门票¥70，小程序预约\n⚠️ 必须提前预约！\n\n💬 评论区实测：\n• 建议8点前到排队\n• 半天够了\n• 讲解：现场拼400一场\n\n必看：青铜大立人像、金面具、金杖、青铜神树',
+     xhs:[{id:'6991c9450000000015030661',label:'三星堆攻略'}]},
     {name:'返回成都',lat:30.631,lng:104.157,type:'transport',time:'16:00',desc:'打车/高铁回成都'},
-    {name:'九眼桥·廊桥',lat:30.648,lng:104.085,type:'spot',time:'19:30',desc:'安顺廊桥，成都夜景地标',detail:'💬 评论精选：\n• 「灯光亮起来太美了」\n• 「建议晚上7-8点去」\n• 「附近可以逛逛酒吧街」',xhs:[{id:'68b176e0000000001c03023d',label:'九眼桥攻略'},{id:'67501d50000000000201a01b',label:'夜游攻略'}]},
+    {name:'九眼桥·廊桥',lat:30.648,lng:104.085,type:'spot',time:'19:30',desc:'安顺廊桥，成都夜景地标',
+     detail:'🌉 安顺廊桥，成都最美夜景地标之一\n灯光亮起时拍照绝佳\n\n💬 小红书评论精选：\n• 「灯光亮起来太美了」\n• 「桥上可以看府南河夜景」\n• 「建议晚上7-8点去，天刚黑最好看」\n• 「附近可以顺便逛逛酒吧街」',
+     xhs:[{id:'68b176e0000000001c03023d',label:'九眼桥攻略'},{id:'67501d50000000000201a01b',label:'夜游攻略'}]},
     {name:'九眼桥晚餐',lat:30.648,lng:104.085,type:'food',time:'20:30',desc:'附近找吃的'}
-  ]},
-  {id:4,label:'D4·市区',date:'6月19日',title:'浣花溪喝茶→文化公园→玉林',color:'#34c759',locations:[
+   ]},
+  {id:4,label:'D4·市区',date:'6月19日',title:'浣花溪喝茶→文化公园→玉林',color:'#34c759',
+   locations:[
     {name:'睡到自然醒',lat:30.663,lng:104.082,type:'hotel',time:'09:00',desc:'今天放慢节奏'},
-    {name:'浣花溪公园',lat:30.665,lng:104.035,type:'drink',time:'10:00',desc:'成都最美公园，坝坝茶',detail:'💬 评论精选：\n• 「成都最美公园，没有之一」\n• 「盖碗茶15-30元」\n• 「本地人周末都来这里」',xhs:[{id:'64b397cb0000000016025a6b',label:'浣花溪喝茶'}]},
-    {name:'文化公园',lat:30.668,lng:104.045,type:'drink',time:'13:00',desc:'百年老茶馆鹤鸣茶社',detail:'💬 评论精选：\n• 「这才是真正的成都茶馆」\n• 「比人民公园人少多了」\n• 「周末有川剧表演，不收门票」',xhs:[{id:'669aaeb00000000025014430',label:'鹤鸣茶社'}]},
+    {name:'浣花溪公园',lat:30.665,lng:104.035,type:'drink',time:'10:00',desc:'成都最美公园，坝坝茶',
+     detail:'🌿 浣花溪公园，成都本地人最爱的喝茶地\n比人民公园环境更好，人更少\n\n💬 小红书评论精选：\n• 「成都最美公园，没有之一」\n• 「盖碗茶15-30元，比景区便宜」\n• 「白鹭很多，拍照好看」\n• 「本地人周末都来这里」',
+     xhs:[{id:'64b397cb0000000016025a6b',label:'浣花溪喝茶'}]},
+    {name:'文化公园',lat:30.668,lng:104.045,type:'drink',time:'13:00',desc:'百年老茶馆鹤鸣茶社',
+     detail:'🍵 文化公园·鹤鸣茶社\n百年老茶馆，比人民公园更本地\n\n💬 小红书评论精选：\n• 「这才是真正的成都茶馆」\n• 「比人民公园人少多了」\n• 「盖碗茶15-30元」\n• 「周末有川剧表演，不收门票」',
+     xhs:[{id:'669aaeb00000000025014430',label:'鹤鸣茶社'}]},
     {name:'芳华街补逛',lat:30.640,lng:104.055,type:'spot',time:'15:00',desc:'昨天没逛够的今天补上'},
-    {name:'玉林路晚餐',lat:30.638,lng:104.058,type:'food',time:'18:00',desc:'最后一顿成都味',detail:'🍢 蜀堰老妈砂锅串串\n让老板打碟子！',xhs:[{id:'696bacfd000000002203bafe',label:'玉林串串'},{id:'66ed3ffe0000000012011fec',label:'玉林美食'}]},
+    {name:'玉林路晚餐',lat:30.638,lng:104.058,type:'food',time:'18:00',desc:'最后一顿成都味',
+     detail:'🍢 蜀堰老妈砂锅串串（玉林总店）\n人均五六十，没餐位费\n让老板打碟子！',
+     xhs:[{id:'696bacfd000000002203bafe',label:'玉林串串'},{id:'66ed3ffe0000000012011fec',label:'玉林美食'}]},
     {name:'最后一晚',lat:30.663,lng:104.082,type:'drink',time:'20:30',desc:'找个地方喝一杯'}
-  ]},
-  {id:5,label:'D5·离开',date:'6月20日',title:'最后一逛，天府起飞',color:'#8e8e93',locations:[
+   ]},
+  {id:5,label:'D5·离开',date:'6月20日',title:'最后一逛，天府起飞',color:'#8e8e93',
+   locations:[
     {name:'酒店退房',lat:30.663,lng:104.082,type:'transport',time:'08:30',desc:'睡到自然醒'},
-    {name:'最后一逛',lat:30.655,lng:104.060,type:'spot',time:'09:30',desc:'望平街/东郊记忆',xhs:[{id:'68202196000000000303d1a4',label:'citywalk路线'}]},
+    {name:'最后一逛',lat:30.655,lng:104.060,type:'spot',time:'09:30',desc:'望平街/东郊记忆',
+     xhs:[{id:'68202196000000000303d1a4',label:'citywalk路线'}]},
     {name:'午餐',lat:30.660,lng:104.060,type:'food',time:'11:30',desc:'最后一顿成都味'},
     {name:'前往天府机场',lat:30.663,lng:104.082,type:'transport',time:'13:30',desc:'⚠️ 必须13:30出发！'},
     {name:'✈️ 起飞',lat:30.315,lng:104.443,type:'transport',time:'17:00',desc:'成都再见！'}
-  ]}
+   ]}
 ];
+
+// ════════ OVERVIEW ════════
 function overviewContent(){
-  return `<div class="hero"><h1>成都 · 都江堰 · 三星堆</h1><p class="sub">5天深度游 · 小红书数据驱动 · 140条笔记+993条评论</p></div>
+  let xhsList='';
+  XHS.forEach((x,i)=>{
+    xhsList+=`<div class="shop-item"><div class="shop-name">${i+1}. ${x.title}</div><div class="shop-desc">❤️ ${x.likes}赞</div><div class="xhs-link" onclick="window.open('${xhsUrl(x.id)}')">📕 查看原文</div></div>`;
+  });
+  
+  return `
+<div class="hero"><h1>成都 · 都江堰 · 三星堆</h1><p class="sub">5天深度游 · 小红书数据驱动 · 140条笔记+993条评论</p></div>
 <div class="info-grid">
-<div class="info-card"><div class="label">人数</div><div class="value">2人</div></div>
-<div class="info-card"><div class="label">住宿</div><div class="value">D1/D3/D4 市二医院/牛市口<br>D2 都江堰南桥</div></div>
-<div class="info-card"><div class="label">节奏</div><div class="value">深度逛吃，不赶场</div></div>
-<div class="info-card"><div class="label">离开</div><div class="value">6.20 天府T2 ✈️ 17:00</div></div>
+  <div class="info-card"><div class="label">人数</div><div class="value">2人</div></div>
+  <div class="info-card"><div class="label">住宿</div><div class="value">D1/D3/D4 市二医院/牛市口<br>D2 都江堰南桥</div></div>
+  <div class="info-card"><div class="label">节奏</div><div class="value">深度逛吃，不赶场</div></div>
+  <div class="info-card"><div class="label">离开</div><div class="value">6.20 天府T2 ✈️ 17:00</div></div>
 </div>
 <div class="section-head">行程概览</div>
-<div class="card" onclick="go(1)"><div class="name"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff9500;margin-right:5px"></span>D1 · 芳华街+玉林</div><div class="desc">芳华街→芳草街→玉林综合市场→玉林路</div></div>
-<div class="card" onclick="go(2)"><div class="name"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#007aff;margin-right:5px"></span>D2 · 都江堰</div><div class="desc">水利工程→灌县古城→南桥蓝眼泪</div></div>
-<div class="card" onclick="go(3)"><div class="name"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#af52de;margin-right:5px"></span>D3 · 三星堆+九眼桥</div><div class="desc">古蜀文明→返回成都→九眼桥廊桥夜景</div></div>
-<div class="card" onclick="go(4)"><div class="name"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#34c759;margin-right:5px"></span>D4 · 喝茶+玉林</div><div class="desc">浣花溪公园→文化公园→芳华街→玉林路</div></div>
-<div class="card" onclick="go(5)"><div class="name"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#8e8e93;margin-right:5px"></span>D5 · 天府起飞</div><div class="desc">最后一逛→13:30出发→17:00飞机</div></div>
-<div class="section-head">⚠️ 提前预约</div>
-<div class="card"><div class="desc">① <strong>三星堆</strong> 6月18日 ¥70/人<br>② <strong>都江堰</strong> 6月17日 ¥80/人<br>③ <strong>城际列车</strong> 12306提前买票</div></div>
-<div class="section-head">📕 小红书高赞笔记</div>
-${shopToggle('xhs_all',[
-  {name:'成都玉林路美食三刷全攻略',desc:'❤️ 6863赞',url:'6784dd5b000000000b0209ce'},
-  {name:'成都芳草街！！人均60➕的穷鬼漂亮饭！！！',desc:'❤️ 4940赞',url:'66d09985000000001d0392ca'},
-  {name:'成都夜游citywalk，望平街-九眼桥超详细攻略',desc:'❤️ 4697赞',url:'67501d50000000000201a01b'},
-  {name:'成都，你心中TOP1的串串店是哪家？',desc:'❤️ 4531赞',url:'628323f40000000001028405'},
-  {name:'参见成都竹荪鱿鱼鸡汤串串女王！！',desc:'❤️ 4164赞',url:'6a1617050000000035022c63'},
-  {name:'成都玉林路📍砂锅串串大王👑',desc:'❤️ 3627赞',url:'696bacfd000000002203bafe'},
-  {name:'不要让我求你们去玉林菜市好吗',desc:'❤️ 3457赞',url:'642075bc0000000011012a4a'},
-  {name:'成都玉林路Citywalk🚶不绕路攻略✅',desc:'❤️ 3030赞',url:'698d7ea5000000000b0108c6'},
-],'全部高赞笔记')}`;
+<div class="day-list">
+  <div class="card" onclick="go(1)"><div class="name"><span class="dot" style="background:#ff9500"></span>D1 · 芳华街+玉林</div><div class="desc">芳华街→芳草街→玉林综合市场→玉林路</div></div>
+  <div class="card" onclick="go(2)"><div class="name"><span class="dot" style="background:#007aff"></span>D2 · 都江堰</div><div class="desc">水利工程→灌县古城→南桥蓝眼泪</div></div>
+  <div class="card" onclick="go(3)"><div class="name"><span class="dot" style="background:#af52de"></span>D3 · 三星堆+九眼桥</div><div class="desc">古蜀文明→返回成都→九眼桥廊桥夜景</div></div>
+  <div class="card" onclick="go(4)"><div class="name"><span class="dot" style="background:#34c759"></span>D4 · 喝茶+玉林</div><div class="desc">浣花溪公园→文化公园→芳华街→玉林路</div></div>
+  <div class="card" onclick="go(5)"><div class="name"><span class="dot" style="background:#8e8e93"></span>D5 · 天府起飞</div><div class="desc">最后一逛→13:30出发→17:00飞机</div></div>
+</div>
+<div class="section-head">🏨 住宿推荐</div>
+<div class="card">
+  <div class="name">D1/D3/D4：市二医院/牛市口一带</div>
+  <div class="desc">地铁2号线沿线，去东站、犀浦都方便<br>老成都氛围，芳华街玉林路都很近<br>推荐：全季酒店、亚朵、或附近民宿</div>
+</div>
+<div class="section-head">⚠️ 提前预约清单</div>
+<div class="card">
+  <div class="desc">① <strong>三星堆博物馆</strong> — 6月18日 — ¥70/人<br>📱 微信搜索"三星堆博物馆"小程序<br><br>② <strong>都江堰景区</strong> — 6月17日 — ¥80/人<br>📱 关注"都江堰景区"公众号<br><br>③ <strong>城际列车</strong> — 12306提前买票</div>
+</div>
+<div class="section-head">📕 小红书高赞笔记合集</div>
+${shopToggle('xhs_all',XHS.map(x=>({name:x.title,desc:'❤️ '+x.likes+'赞',url:x.id})),'全部高赞笔记')}
+`;
 }
+
+// ════════ MAP ════════
 const map=L.map('map',{center:[30.66,104.06],zoom:11,zoomControl:false});
 L.control.zoom({position:'topright'}).addTo(map);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{maxZoom:19}).addTo(map);
+
 function icon(c,e){return L.divIcon({className:'',html:`<div style="width:26px;height:26px;border-radius:50%;background:${c};border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 6px rgba(0,0,0,.18)">${e||''}</div>`,iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]})}
+
 L.marker([HOTEL_BASE.lat,HOTEL_BASE.lng],{icon:icon('#ff9500','🏨'),zIndexOffset:1000}).addTo(map).bindPopup('<b>D1/D3/D4 酒店</b><br>市二医院/牛市口');
 L.marker([HOTEL_D2.lat,HOTEL_D2.lng],{icon:icon('#ff9500','🏨'),zIndexOffset:1000}).addTo(map).bindPopup('<b>D2 酒店</b><br>都江堰南桥');
+
 let markers=[],polylines=[];
 const emojis={food:'🍽️',spot:'📍',hotel:'🏨',transport:'🚃',drink:'🍺'};
 function clearMap(){markers.forEach(m=>map.removeLayer(m));polylines.forEach(p=>map.removeLayer(p));markers=[];polylines=[];}
+
 function showDay(idx){
   clearMap();
-  if(idx===0){const pts=[];DAYS.forEach(d=>d.locations.forEach(l=>{if(l.lat)pts.push([l.lat,l.lng])}));if(pts.length)map.fitBounds(pts,{padding:[30,30]});DAYS.slice(1).forEach(d=>{d.locations.forEach(l=>{if(l.lat){const m=L.circleMarker([l.lat,l.lng],{radius:3.5,fillColor:d.color,color:'#fff',weight:1.5,fillOpacity:.9}).addTo(map).bindPopup('<b>'+l.name+'</b><br>'+d.label);markers.push(m)}})});return}
+  if(idx===0){const pts=[];DAYS.forEach(d=>d.locations.forEach(l=>{if(l.lat)pts.push([l.lat,l.lng])}));if(pts.length)map.fitBounds(pts,{padding:[30,30]});DAYS.slice(1).forEach(d=>{d.locations.filter(l=>l.time!=='—').forEach(l=>{const m=L.circleMarker([l.lat,l.lng],{radius:3.5,fillColor:d.color,color:'#fff',weight:1.5,fillOpacity:.9}).addTo(map).bindPopup('<b>'+l.name+'</b><br><span style="color:#86868b">'+d.label+'</span>');markers.push(m)})});return}
   const day=DAYS.find(d=>d.id===idx);if(!day)return;const coords=[];
-  day.locations.forEach(l=>{if(!l.lat)return;const m=L.marker([l.lat,l.lng],{icon:icon(day.color,emojis[l.type]||'📌')}).addTo(map);m.bindPopup('<b>'+l.name+'</b><br>'+l.time+'<br>'+l.desc);markers.push(m);if(l.time!=='—')coords.push([l.lat,l.lng])});
-  if(coords.length>1){polylines.push(L.polyline(coords,{color:day.color,weight:2.5,opacity:.4,dashArray:'6,5'}).addTo(map))}
+  day.locations.forEach(l=>{if(!l.lat)return;const m=L.marker([l.lat,l.lng],{icon:icon(day.color,emojis[l.type]||'📌')}).addTo(map);m.bindPopup('<b>'+l.name+'</b>'+(l.time!=='—'?'<br><span style="color:#86868b">'+l.time+'</span>':'')+'<br>'+l.desc);markers.push(m);if(l.time!=='—')coords.push([l.lat,l.lng])});
+  if(coords.length>1){const pl=L.polyline(coords,{color:day.color,weight:2.5,opacity:.4,dashArray:'6,5'}).addTo(map);polylines.push(pl)}
   if(coords.length)map.fitBounds(coords,{padding:[40,40],maxZoom:14});
 }
+
+// ════════ RENDER ════════
 function locCard(loc,dayIdx){
   const dot=loc.type==='food'?'food':loc.type==='spot'?'spot':loc.type==='drink'?'drink':loc.type==='hotel'?'hotel':'transport';
   const bdg=loc.type==='food'?'<span class="badge food">餐</span>':loc.type==='spot'?'<span class="badge spot">景</span>':loc.type==='drink'?'<span class="badge drink">饮</span>':'';
-  const uid='d'+dayIdx+loc.name.replace(/\W/g,'');
-  let lnk='<button class="btn nav" onclick="event.stopPropagation();openAS(\''+loc.name.replace(/'/g,"\\'")+'\','+loc.lat+','+loc.lng+')">📍 导航</button>';
+  const uid='d'+dayIdx+'-'+loc.name.replace(/\W/g,'');
+  let lnk='<button class="btn nav" onclick="openAS(\''+loc.name.replace(/'/g,"\\'")+'\','+loc.lat+','+loc.lng+')">📍 导航</button>';
   if(loc.xhs)loc.xhs.forEach(x=>{lnk+=xhsBtn(x.id,x.label)});
+  
   let shopHtml='';
-  if(loc.name.includes('芳华街')&&dayIdx===1)shopHtml=shopToggle('fh1',SHOPS.fanghua,'芳华街店铺');
-  if(loc.name.includes('芳草街'))shopHtml=shopToggle('fc1',SHOPS.fanghua,'芳草街店铺');
+  if(loc.name.includes('芳华街')&&dayIdx===1)shopHtml=shopToggle('fh1',SHOPS.fanghua,'芳华街店铺推荐');
+  if(loc.name.includes('芳草街'))shopHtml=shopToggle('fc1',SHOPS.fanghua,'芳草街店铺推荐');
   if(loc.name.includes('玉林综合市场'))shopHtml=shopToggle('ym',SHOPS.yulin_market,'玉林综合市场美食');
-  if(loc.name.includes('玉林路')&&dayIdx===1)shopHtml=shopToggle('yl1',SHOPS.yulin_road,'玉林路店铺');
+  if(loc.name.includes('玉林路')&&dayIdx===1)shopHtml=shopToggle('yl1',SHOPS.yulin_road,'玉林路店铺推荐');
   if(loc.name.includes('浣花溪'))shopHtml=shopToggle('hh',SHOPS.huanhua,'浣花溪公园');
   if(loc.name.includes('文化公园'))shopHtml=shopToggle('wh',SHOPS.wenhua,'文化公园');
   if(loc.name.includes('九眼桥')&&loc.type==='spot')shopHtml=shopToggle('jyq',SHOPS.jiuyanqiao,'九眼桥');
-  if(loc.name.includes('芳华街')&&dayIdx===4)shopHtml=shopToggle('fh2',SHOPS.fanghua,'芳华街店铺');
-  if(loc.name.includes('玉林路')&&dayIdx===4)shopHtml=shopToggle('yl2',SHOPS.yulin_road,'玉林路店铺');
-  return `<div class="tl-item"><div class="tl-dot ${dot}"></div><div class="card" onclick="toggle('${uid}')"><div class="time">${loc.time}</div><div class="name">${bdg} ${loc.name}</div><div class="desc">${loc.desc}</div><div class="links">${lnk}</div>${loc.detail?'<div class="details" id="'+uid+'">'+loc.detail.replace(/\n/g,'<br>')+'</div>':''}${shopHtml}</div></div>`;
+  if(loc.name.includes('芳华街')&&dayIdx===4)shopHtml=shopToggle('fh2',SHOPS.fanghua,'芳华街店铺推荐');
+  if(loc.name.includes('玉林路')&&dayIdx===4)shopHtml=shopToggle('yl2',SHOPS.yulin_road,'玉林路店铺推荐');
+  
+  return `<div class="tl-item"><div class="tl-dot ${dot}"></div><div class="card" onclick="if(!event.target.closest('.btn,.links,.shop-toggle,.shop-list,.xhs-link'))toggle('${uid}')"><div class="time">${loc.time!=='—'?loc.time:'备选'}</div><div class="name">${bdg} ${loc.name}</div><div class="desc">${loc.desc}</div>${loc.budget?'<div class="budget">'+loc.budget+'</div>':''}<div class="links">${lnk}</div>${loc.detail?'<div class="details" id="'+uid+'">'+loc.detail.replace(/\n/g,'<br>')+'</div>':''}${shopHtml}</div></div>`;
 }
+
 function renderDay(idx){
   const d=DAYS.find(x=>x.id===idx);if(!d)return'';
-  let h=`<div class="day-head"><h2>${d.title}</h2><p>${d.date}</p></div>`;
-  if(d.id===1)h+='<div class="route-bar"><strong>路线：</strong>酒店 → 芳华街 → 芳草街 → 玉林综合市场 → 玉林路</div>';
-  if(d.id===2)h+='<div class="route-bar"><strong>路线：</strong>犀浦站 → 都江堰景区 → 灌县古城 → 南桥</div>';
-  if(d.id===3)h+='<div class="route-bar"><strong>路线：</strong>都江堰 → 三星堆 → 返回成都 → 九眼桥廊桥</div>';
-  if(d.id===4)h+='<div class="route-bar"><strong>路线：</strong>酒店 → 浣花溪公园 → 文化公园 → 芳华街 → 玉林路</div>';
-  h+='<div class="timeline">';
-  d.locations.forEach(l=>h+=locCard(l,idx));
-  return h+'</div>';
+  const main=d.locations.filter(l=>l.time!=='—');
+  let h='<div class="day-head"><h2>'+d.title+'</h2><p>'+d.date+'</p></div>';
+  if(d.id===1)h+='<div class="route-bar"><strong>路线：</strong>酒店 → 芳华街 → 芳草街 → 玉林综合市场 → 玉林路</div>';如果(d.id===1)h+='<div class="route-bar"><strong>路线：</strong>酒店 → 芳华街 → 芳草街 → 玉林综合市场 → 玉林路</div>';
+  if(d.id===2)h+='<div class="route-bar"><strong>路线：</strong>犀浦站 → 都江堰景区 → 灌县古城 → 南桥</div>';如果(d.id===2)h+='<div class="route-bar"><strong>路线：</strong>犀浦站 → 都江堰景区 → 灌县古城 → 南桥</div>';
+  if(d.id===3)h+='<div class="route-bar"><strong>路线：</strong>都江堰 → 三星堆 → 返回成都 → 九眼桥廊桥</div>';如果(d.id===3)h+='<div class="route-bar"><strong>路线：</strong>都江堰 → 三星堆 → 返回成都 → 九眼桥廊桥</div>';
+  if(d.id===4)h+='<div class="route-bar"><strong>路线：</strong>酒店 → 浣花溪公园 → 文化公园 → 芳华街 → 玉林路</div>';如果(d.id===4)h+='<div class="route-bar"><strong>路线：</strong>酒店 → 浣花溪公园 → 文化公园 → 芳华街 → 玉林路</div>';
+  if(main.length){h+='<div class="section-head">行程</div><div class="timeline">';main.forEach(l=>h+=locCard(l,idx));h+='</div>'}如果(main主主.length长度){h+='<div class="section-head">行程</div><div class="timeline">';main主主.forEach(l=>h+=locCard(l,idx));h+='</div>'}
+  return h;返回 h;
 }
+
+// ════════ NAV ════════// ════════ 导航 ════════// ════════ 导航 ════════// ════════ 导航 ════════// ════════ 导航 ════════// ════════ 导航 ════════// ════════ 导航 ════════// ════════ 导航 ════════
 let cur=0;
-const tabsEl=document.getElementById('tabs'),contentEl=document.getElementById('content');
-DAYS.forEach(d=>{const btn=document.createElement('button');btn.className='tab'+(d.id===0?' active':'');btn.dataset.day=d.id;btn.textContent=d.label;tabsEl.appendChild(btn)});
+const tabsEl=document.getElementById('tabs');
+const contentEl=document.getElementById('content');
+DAYS.forEach(d=>{const btn=document.createElement('button');btn.className='tab'+(d.id===0?' active':'');btn.dataset.day=d.id;btn.textContent=d.label;tabsEl.appendChild(btn)});天数.forEach(d=>{const 按钮=document.createElement('button');按钮.类名='标签'+(d.编号===0?' active':'');按钮.dataset.day=d.编号;按钮.textContent=d.label;tabsEl.appendChild(按钮)});天数.forEach(d=>{const 按钮=document.createElement('button');按钮.类名='标签'+(d.编号===0?' active':'');按钮.数据集.天数=d.编号;按钮.文本内容=d.标签;选项卡元素.追加子节点(按钮)});天数.forEach(d=>{const 按钮=document.createElement('button');按钮.类名='标签'+(d.编号===0?' active':'');按钮.数据集.天数=d.编号;按钮.文本内容=d.标签;选项卡元素.追加子节点(按钮)});
+
 function go(idx){
   cur=idx;tabsEl.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',+t.dataset.day===idx));
   contentEl.innerHTML=idx===0?overviewContent():renderDay(idx);
   showDay(idx);contentEl.scrollTo({top:0});
+  const tab=tabsEl.querySelector('[data-day="'+idx+'"]');if(tab)tab.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});const tab=tabsEl.querySelector('[data-day="'+idx+'"]');如果(tab)tab.scrollIntoView({行为:'平滑',内联:'居中',块:'最近'});  const tab=tabsEl.querySelector('[data-day="'+idx+'"]');如果(tab)tab.scrollIntoView({行为:'平滑',内联:'居中',块:'最近'});const tab=tabsEl.querySelector('[data-day="'+idx+'"]');如果(tab)tab.scrollIntoView({行为:'平滑',内联:'居中',块:'最近'});
 }
-function toggle(id){const el=document.getElementById(id);if(el)el.classList.toggle('show')}
+function toggle(id){const el=document.getElementById(id);if(el)el.classList.toggle('closed')}函数 切换(id){const 元素=document.getElementById(id);如果(元素)元素.classList.切换('closed')}函数 切换(id){const常量 el=document文档.getElementById(id);如果(el)el.classList.切换('closed')}函数 切换(id){const 元素=document.getElementById(id);如果(元素)元素.classList.切换('closed')}
 tabsEl.addEventListener('click',e=>{const t=e.target.closest('.tab');if(t)go(+t.dataset.day)});
-go(0);
-const asOverlay=document.createElement('div');asOverlay.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s';
-asOverlay.innerHTML='<div style="width:100%;max-width:420px;padding:0 8px 34px"><div style="background:rgba(255,255,255,.88);backdrop-filter:blur(20px);border-radius:14px;overflow:hidden;margin-bottom:8px" id="as-opts"></div><div style="background:rgba(255,255,255,.88);backdrop-filter:blur(20px);border-radius:14px;overflow:hidden"><button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;font-size:17px;color:#007aff;font-weight:600;border:none;background:none;width:100%;cursor:pointer" onclick="closeAS()">取消</button></div></div>';
-document.body.appendChild(asOverlay);asOverlay.addEventListener('click',e=>{if(e.target===asOverlay)closeAS()});
-function openAS(n,lat,lng){const enc=encodeURIComponent(n);document.getElementById('as-opts').innerHTML=`<button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;font-size:17px;color:#007aff;font-weight:500;border:none;background:none;width:100%;cursor:pointer;border-bottom:.5px solid rgba(0,0,0,.12)" onclick="window.open('https://uri.amap.com/marker?position=${lng},${lat}&name=${enc}&src=trip&coordinate=wgs84&callnative=1');closeAS()">🧭 高德地图</button><button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;font-size:17px;color:#007aff;font-weight:500;border:none;background:none;width:100%;cursor:pointer" onclick="window.open('https://map.baidu.com/search/${enc}');closeAS()">🗺️ 百度地图</button>`;asOverlay.style.opacity='1';asOverlay.style.pointerEvents='auto'}
-function closeAS(){asOverlay.style.opacity='0';asOverlay.style.pointerEvents='none'}
-</script>
-</body>
+go(0);去(0);
+
+// Action Sheet// 操作菜单
+const asOverlay=document.createElement('div');asOverlay.className='as-overlay';
+asOverlay.innerHTML='<div class="as-sheet"><div class="as-group" id="as-opts"></div><div class="as-group"><button class="as-item as-cancel" onclick="closeAS()">取消</button></div></div>';
+document.body.appendChild(asOverlay);asOverlay.addEventListener('click',e=>{if(e.target===asOverlay)closeAS()});文档.主体.appendChild(作为叠加层);作为叠加层.添加事件监听器('点击',e=>{如果(e.目标===作为叠加层)关闭AS()});文档.主体.appendChild(作为叠加层);作为叠加层.addEventListener('click',e=>{if(e.target===作为叠加层)closeAS()});文档.主体.appendChild(作为叠加层);作为叠加层.添加事件监听器('点击',e=>{如果(e.目标===作为叠加层)关闭AS()});
+function openAS(n,lat,lng){const enc=encodeURIComponent(n);document.getElementById('as-opts').innerHTML='<button class="as-item" onclick="window.open(\'https://maps.apple.com/?q='+lat+','+lng+'&name='+enc+'\');closeAS()">🍎 Apple Maps</button><button class="as-item" onclick="window.open(\'https://uri.amap.com/marker?position='+lng+','+lat+'&name='+enc+'&src=trip&coordinate=wgs84&callnative=1\');closeAS()">🧭 高德地图</button><button class="as-item" onclick="window.open(\'https://map.baidu.com/search/'+enc+'\');closeAS()">🗺️ 百度地图</button>';asOverlay.classList.add('show')}函数 openAS(n,lat,lng){const enc=encodeURIComponent(n);document.getElementById('as-opts').innerHTML='<button class="as-item" onclick="window.open(\'https://maps.apple.com/?q='+lat+','+lng+'&name='+enc+'\');closeAS()"> 苹果地图</button><button class="as-item" onclick="window.open(\'https://uri.amap.com/marker?position='+lng+','+lat+'&name='+enc+'&src=trip&coordinate=wgs84&callnative=1\');closeAS()"> 高德地图</button><button class="as-item" onclick="window.open(\'https://map.baidu.com/search/'+enc+'\');closeAS()">️ 百度地图</button>';asOverlay.classList.add('show')}函数 openAS(n,lat,lng){const enc=encodeURIComponent(n);document.getElementById('as-opts').innerHTML='<button class="as-item" onclick="window.open(\'https://maps.apple.com/?q='+lat+','+lng+'&name='+enc+'\');closeAS()"> 苹果地图</button><button class="as-item" onclick="window.open(\'https://uri.amap.com/marker?position='+lng+','+lat+'&name='+enc+'&src=trip&coordinate=wgs84&callnative=1\');closeAS()"> 高德地图</button><button class="as-item" onclick="window.open(\'https://map.baidu.com/search/'+enc+'\');closeAS()">️ 百度地图</button>';asOverlay.classList.add('show''显示')}函数 openAS(n,lat,lng){const enc=encodeURIComponent(n);document.getElementById('as-opts').innerHTML='<button class="as-item" onclick="window.open(\'https://maps.apple.com/?q='+lat+','+lng+'&name='+enc+'\');closeAS()"> 苹果地图</button><button class="as-item" onclick="window.open(\'https://uri.amap.com/marker?position='+lng+','+lat+'&name='+enc+'&src=trip&coordinate=wgs84&callnative=1\');closeAS()"> 高德地图</button><button class="as-item" onclick="window.open(\'https://map.baidu.com/search/'+enc+'\');closeAS()">️ 百度地图</button>';asOverlay.classList.add('show''显示')}
+function closeAS(){asOverlay.classList.remove('show')}函数 closeAS(){asOverlay.classList.remove('show')}函数 closeAS(){asOverlay.classList.remove删除('show''显示')}函数 closeAS(){asOverlay.classList.remove删除('show''显示')}函数 closeAS(){asOverlay.classList.remove('show')}函数 closeAS(){asOverlay.classList.remove('show')}函数 closeAS(){asOverlay.classList.remove删除('show''显示')}函数 closeAS(){asOverlay.classList.remove删除('show''显示')}
+</script>脚本>
+</body>主体>
 </html>
