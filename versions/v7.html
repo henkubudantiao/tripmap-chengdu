@@ -142,10 +142,10 @@ function st(id,shops,title){
   shops.forEach(function(s){
     h+='<div class="shop-item"><div class="shop-name">'+s.name+'</div><div class="shop-desc">'+s.desc+"</div>";
     if(s.quote) h+='<div class="shop-quote">'+s.quote+"</div>";
-    if(s.dishes) h+='<div class="dishes"><strong> 推荐：</strong>"+s.dishes+"</div>";
-    h+="</div>";
+    if(s.dishes) h+='<div class="dishes"><strong> 推荐：</strong>'+s.dishes+'</div>';
+    h+='</div>';
   });
-  h+="</div>";
+  h+='</div>';
   return h;
 }
 function ts(id){var el=document.getElementById(id);var t=el.previousElementSibling;el.classList.toggle("show");t.classList.toggle("open")}
@@ -364,7 +364,7 @@ function oas(n,lat,lng){
   document.getElementById("as-opts").innerHTML=
     '<button class="as-item" onclick="window.open(\'https://maps.apple.com/?q='+lat+","+lng+"&name="+enc+"');cas()\">Apple Maps</button>"+
     '<button class="as-item" onclick="window.open(\'https://uri.amap.com/marker?position='+lng+","+lat+"&name="+enc+"&src=trip&coordinate=wgs84&callnative=1');cas()\">高德地图</button>"+
-    '<button class="as-item" onclick="window.open(\'https://map.baidu.com/search/"+enc+"');cas()\">百度地图</button>";
+    '<button class="as-item" onclick="window.open(\'https://map.baidu.com/search/'+enc+'\');cas()">百度地图</button>';
   asO.classList.add("show");
 }
 function cas(){asO.classList.remove("show");}
