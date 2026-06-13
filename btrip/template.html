@@ -28,7 +28,7 @@
 .btn{display:inline-flex;align-items:center;gap:3px;padding:6px 10px;border-radius:var(--r);font-size:12px;font-weight:600;border:none;cursor:pointer;text-decoration:none!important;transition:filter .2s;line-height:1.3}.btn:active{filter:brightness(.9)}.btn.nav{background:var(--accent);color:#fff}.btn.xhs{background:#ff2442;color:#fff}
 .details{margin-top:8px;padding-top:8px;border-top:.5px solid var(--sep);font-size:12px;color:var(--text2);line-height:1.55}.details.closed{display:none}
 .shop-toggle{background:var(--bg);border-radius:var(--r);padding:10px 14px;box-shadow:var(--shadow);margin-top:8px;cursor:pointer;display:flex;align-items:center;justify-content:space-between}.shop-toggle .arrow{transition:transform .2s;font-size:12px;color:var(--text3)}.shop-toggle.open .arrow{transform:rotate(90deg)}
-.shop-list{display:none;margin-top:6px}.shop-list.show{display:block}
+.shop-list{max-height:0;overflow:hidden;opacity:0;transition:max-height 0.3s ease,opacity 0.2s ease;margin-top:0}.shop-list.show{max-height:2000px;opacity:1;margin-top:6px}
 .shop-item{background:var(--bg);border-radius:var(--r);padding:10px 12px;margin-bottom:6px;box-shadow:var(--shadow);font-size:12px;line-height:1.6}
 .shop-item .shop-name{font-size:14px;font-weight:600;margin-bottom:4px}.shop-item .shop-desc{color:var(--text2);margin-bottom:4px}.shop-item .shop-quote{font-style:italic;color:var(--text3);border-left:2px solid var(--sep);padding-left:8px;margin:4px 0}.shop-item .dishes{margin-top:4px;padding:4px 8px;background:var(--bg2);border-radius:var(--r)}.shop-item .dishes strong{color:var(--red)}
 .shop-item .xhs-link{display:inline-flex;align-items:center;gap:3px;margin-top:6px;padding:4px 8px;background:#ff2442;color:#fff;border-radius:var(--r);font-size:11px;font-weight:600;cursor:pointer}
@@ -137,7 +137,7 @@ optional:[
 };
 
 function st(id,shops,title){
-  var h='<div class="shop-toggle" onclick="ts(\''+id+'\')"><span> '+title+"（"+shops.length+"家）</span><span class='arrow'></span></div>";
+  var h='<div class="shop-toggle" data-target="'+id+'" onclick="ts(\''+id+'\')"><span> '+title+"（"+shops.length+"家）</span><span class='arrow'></span></div>";
   h+='<div class="shop-list" id="'+id+'">';
   shops.forEach(function(s){
     h+='<div class="shop-item"><div class="shop-name">'+s.name+'</div><div class="shop-desc">'+s.desc+"</div>";
@@ -148,7 +148,7 @@ function st(id,shops,title){
   h+='</div>';
   return h;
 }
-function ts(id){var el=document.getElementById(id);var t=el.previousElementSibling;el.classList.toggle("show");t.classList.toggle("open")}
+function ts(id){var el=document.getElementById(id);if(!el)return;var t=document.querySelector('[data-target="'+id+'"]');if(!t)return;el.classList.toggle("show");t.classList.toggle("open")}
 
 var DAYS=[
 {id:0,label:"总览",color:"#0071e3"},
@@ -227,6 +227,7 @@ locations:[
 ];
 
 function ov(){
+  var backup_html='\n<div class="section-head">📌 备选景点（未安排但值得考虑）</div>\n<div class="card">\n  <div class="name">宽窄巷子</div>\n  <div class="desc">成都最著名的旅游景点之一，由宽巷子、窄巷子、井巷子平行排列组成。青黛砖瓦的四合院落，尽享老成都的闲适。商业化较重，但拍照出片。</div>\n</div>\n<div class="card">\n  <div class="name">武侯祠</div>\n  <div class="desc">中国唯一的君臣合祀祠庙，纪念诸葛亮、刘备及蜀汉英雄。红墙竹影是经典拍照点。门票50元。</div>\n</div>\n<div class="card">\n  <div class="name">杜甫草堂</div>\n  <div class="desc">唐代诗人杜甫流寓成都时的居所，园林幽静，文化底蕴深厚。门票50元。</div>\n</div>\n<div class="card">\n  <div class="name">人民公园·鹤鸣茶社</div>\n  <div class="desc">成都最出名的茶馆，百年历史。体验老成都"龙门阵"文化。人多嘈杂是缺点，但氛围独特。盖碗茶15-30元。</div>\n</div>\n<div class="card">\n  <div class="name">青羊宫</div>\n  <div class="desc">川西第一道观，始建于周朝。闹中取静，银杏季极美。门票10元。</div>\n</div>\n<div class="section-head">🍽️ 备选食店（评论区推荐但未安排）</div>\n<div class="card">\n  <div class="name">冒椒火辣（奎星楼街）</div>\n  <div class="desc">成都串串网红店，兔腰必点。排队时间长，建议错峰。「玉林本地人来说，就冒椒火辣好吃」22赞</div>\n</div>\n<div class="card">\n  <div class="name">共享椒麻鸡（玉林路）</div>\n  <div class="desc">椒麻鸡专门店，麻香浓郁。「共享椒麻鸡真的不错，经常点外卖」4赞。适合喜欢麻味的食客。</div>\n</div>\n<div class="card">\n  <div class="name">夺爷炒螺蛳·渝味江湖菜（玉林）</div>\n  <div class="desc">老社区宝藏店，香辣蟹和干烧呱呱是招牌。「太喜欢玉林这种老社区宝藏店！」2赞</div>\n</div>\n<div class="card">\n  <div class="name">爱恨怪豆花（望平街）</div>\n  <div class="desc">酸汤火锅专门店，贵州风味。汤底酸辣开胃，适合夏天。「好多料啥子都可以尝到一点好吃好吃」8赞</div>\n</div>\n<div class="card">\n  <div class="name">松扣扣（海椒市）</div>\n  <div class="desc">贵州酸汤火锅，本地人口碑好。「如果是贵州酸汤真的推荐你吃松扣扣」45赞</div>\n</div>\n<div class="card">\n  <div class="name">椰坝坝+鱼汤婆婆（玉林路）</div>\n  <div class="desc">椰坝坝主打椰子甜品，鱼汤婆婆主打鱼汤粉面。「椰坝坝和鱼汤婆婆好吃」9赞。适合甜品+轻食搭配。</div>\n</div>\n<div class="card">\n  <div class="name">野果子杂食店（芳草街）</div>\n  <div class="desc">融合料理小食堂，人均60-70元。咖喱饭、意面、水牛芝士披萨都不错。适合不想吃辣的时候。</div>\n</div>\n<div class="card">\n  <div class="name">甜匠甜品自助（芳草街）</div>\n  <div class="desc">39元甜品自助，性价比极高。适合下午茶时段补充能量。</div>\n</div>\n';
   var xl="";
   XHS.forEach(function(x,i){
     xl+='<div class="shop-item"><div class="shop-name">'+(i+1)+". "+x.title+'</div><div class="shop-desc">'+x.likes+'赞</div><div class="xhs-link" onclick="window.open(\''+xu(x.id)+"')\">查看原文</div></div>";
@@ -257,7 +258,7 @@ function ov(){
   '<div class="warn"><strong>都江堰驼子饭店</strong>：「那么拉胯的味道」45赞 / 「真的很难吃千万不要去」19赞</div>'+
   '<div class="section-head">可选参考（本地人不优先推荐）</div>'+
   st("opt",SHOPS.optional,"可选景点/店铺")+
-  '<div class="section-head">数据来源（201条笔记+1438条评论）</div>'+
+  backup_html+'<div class="section-head">数据来源（201条笔记+1438条评论）</div>'+
   st("xhs_all",XHS.map(function(x){return{name:x.title,desc:x.likes+"赞"}}),"全部高赞笔记");
 }
 
@@ -309,16 +310,17 @@ function lc(loc,di){
   var lnk='<button class="btn nav" onclick="oas(\''+loc.name.replace(/'/g,"\\'")+"\',"+loc.lat+","+loc.lng+')">导航</button>';
   if(loc.xhs)loc.xhs.forEach(function(x){lnk+=xb(x.id,x.label)});
   var sh="";
-  if(loc.name.indexOf("东郊记忆")>=0)sh=st("dj",SHOPS.dongjiao,"东郊记忆");
-  if(loc.name.indexOf("望平街")>=0)sh=st("wp",SHOPS.wangping,"望平街 香香巷");
-  if(loc.name.indexOf("芳华街")>=0)sh=st("fh",SHOPS.fanghua,"芳华街");
-  if(loc.name.indexOf("芳草街")>=0)sh=st("fc",SHOPS.fangcao,"芳草街店铺推荐");
-  if(loc.name.indexOf("玉林综合市场")>=0)sh=st("ym",SHOPS.yulin_market,"玉林综合市场美食");
-  if(loc.name.indexOf("玉林路")>=0&&loc.type==="food")sh=st("yl",SHOPS.yulin_road,"玉林路店铺推荐");
-  if(loc.name.indexOf("都江堰午餐")>=0||loc.name.indexOf("都江堰晚餐")>=0)sh=st("djy",SHOPS.dujiangyan,"都江堰美食");
-  if(loc.name.indexOf("浣花溪")>=0)sh=st("hx",SHOPS.huaxi_tea,"浣花溪喝茶");
-  if(loc.name.indexOf("太古里")>=0)sh=st("tk",SHOPS.taikoo,"太古里");
-  if(loc.name.indexOf("九眼桥")>=0&&loc.type==="spot")sh=st("jyq",SHOPS.jiuyanqiao,"九眼桥");
+  if(loc.name.indexOf("东郊记忆")>=0)sh=st("dj_"+di,SHOPS.dongjiao,"东郊记忆");
+  if(loc.name.indexOf("望平街")>=0)sh=st("wp_"+di,SHOPS.wangping,"望平街 香香巷");
+  if(loc.name.indexOf("芳华街")>=0)sh=st("fh_"+di,SHOPS.fanghua,"芳华街");
+  if(loc.name.indexOf("芳草街")>=0)sh=st("fc_"+di,SHOPS.fangcao,"芳草街店铺推荐");
+  if(loc.name.indexOf("玉林综合市场")>=0)sh=st("ym_"+di,SHOPS.yulin_market,"玉林综合市场美食");
+  if(loc.name.indexOf("玉林路")>=0&&loc.type==="food")sh=st("yl_"+di,SHOPS.yulin_road,"玉林路店铺推荐");
+  if(loc.name.indexOf("都江堰午餐")>=0)sh=st("djy_lunch_"+di,SHOPS.dujiangyan,"都江堰午餐美食");
+  if(loc.name.indexOf("都江堰晚餐")>=0)sh=st("djy_dinner_"+di,SHOPS.dujiangyan,"都江堰晚餐选择");
+  if(loc.name.indexOf("浣花溪")>=0)sh=st("hx_"+di,SHOPS.huaxi_tea,"浣花溪喝茶");
+  if(loc.name.indexOf("太古里")>=0)sh=st("tk_"+di,SHOPS.taikoo,"太古里");
+  if(loc.name.indexOf("九眼桥")>=0&&loc.type==="spot")sh=st("jyq_"+di,SHOPS.jiuyanqiao,"九眼桥");
   return '<div class="tl-item"><div class="tl-dot '+dot+'"></div><div class="card" onclick="if(!event.target.closest(\'.btn,.links,.shop-toggle,.shop-list,.xhs-link\'))tg(\''+uid+'\')"><div class="time">'+(loc.time!=="-"?loc.time:"备选")+'</div><div class="name">'+bdg+" "+loc.name+'</div><div class="desc">'+loc.desc+"</div>"+(loc.budget?'<div class="budget">'+loc.budget+"</div>":"")+'<div class="links">'+lnk+"</div>"+(loc.detail?'<div class="details" id="'+uid+'">'+loc.detail.replace(/\n/g,"<br>")+"</div>":"")+sh+"</div></div>";
 }
 
@@ -360,11 +362,15 @@ document.body.appendChild(asO);
 asO.addEventListener("click",function(e){if(e.target===asO)cas()});
 
 function oas(n,lat,lng){
-  var enc=encodeURIComponent(n);
-  document.getElementById("as-opts").innerHTML=
-    '<button class="as-item" onclick="window.open(\'https://maps.apple.com/?q='+lat+","+lng+"&name="+enc+"');cas()\">Apple Maps</button>"+
-    '<button class="as-item" onclick="window.open(\'https://uri.amap.com/marker?position='+lng+","+lat+"&name="+enc+"&src=trip&coordinate=wgs84&callnative=1');cas()\">高德地图</button>"+
-    '<button class="as-item" onclick="window.open(\'https://map.baidu.com/search/'+enc+'\');cas()">百度地图</button>';
+  var eu=encodeURIComponent(n);
+  var urls=[
+    {name:"Apple Maps",url:"https://maps.apple.com/?q="+lat+","+lng+"&name="+eu},
+    {name:"\u9ad8\u5fb7\u5730\u56fe",url:"https://uri.amap.com/marker?position="+lng+","+lat+"&name="+eu+"&src=trip&coordinate=wgs84&callnative=1"},
+    {name:"\u767e\u5ea6\u5730\u56fe",url:"https://map.baidu.com/search/"+eu}
+  ];
+  var h="";
+  urls.forEach(function(u){h+="<button class=\"as-item\" onclick=\"window.open(\'"+u.url+"\');cas()\">"+u.name+"</button>";});
+  document.getElementById("as-opts").innerHTML=h;
   asO.classList.add("show");
 }
 function cas(){asO.classList.remove("show");}
