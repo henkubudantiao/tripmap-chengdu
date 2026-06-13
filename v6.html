@@ -156,7 +156,7 @@ function toggleShop(id){const el=document.getElementById(id);const t=el.previous
 // ════════ DAYS ════════
 const DAYS=[
   {id:0,label:'总览',color:'#0071e3'},
-  {id:1,label:'D1·到达',date:'6月16日',title:'到达成都→建设路→望平街',color:'#ff9500',
+  {id:1,label:'D1·到达',date:'6月16日',title:'到达成都→东郊记忆→望平街',color:'#ff9500',
    locations:[
     {name:'成都东站',lat:30.631,lng:104.157,type:'transport',time:'15:00',desc:'到达成都'},
     {name:'东城小居（成华区双桥路）',lat:30.665,lng:104.110,type:'hotel',time:'16:00',desc:'放下行李',
@@ -260,7 +260,7 @@ function overviewContent(){
 </div>
 <div class="section-head">行程概览</div>
 <div class="day-list">
-  <div class="card" onclick="go(1)"><div class="name"><span class="dot" style="background:#ff9500"></span>D1 · 建设路+望平街</div><div class="desc">到达→建设路小吃街→望平街文艺夜</div></div>
+  <div class="card" onclick="go(1)"><div class="name"><span class="dot" style="background:#ff9500"></span>D1 · 建设路+望平街</div><div class="desc">到达→东郊记忆文创园→望平街·香香巷</div></div>
   <div class="card" onclick="go(2)"><div class="name"><span class="dot" style="background:#007aff"></span>D2 · 东郊记忆+玉林路</div><div class="desc">东郊记忆→玉林综合市场→玉林路串串→小酒馆</div></div>
   <div class="card" onclick="go(3)"><div class="name"><span class="dot" style="background:#af52de"></span>D3 · 都江堰+三星堆</div><div class="desc">都江堰水利工程→灌县古城→三星堆博物馆</div></div>
   <div class="card" onclick="go(4)"><div class="name"><span class="dot" style="background:#34c759"></span>D4 · 太古里+九眼桥</div><div class="desc">太古里→大慈寺→望平街→九眼桥夜景</div></div>
@@ -343,8 +343,8 @@ function renderDay(idx){
   const d=DAYS.find(x=>x.id===idx);if(!d)return'';
   const main=d.locations.filter(l=>l.time!=='—');
   let h='<div class="day-head"><h2>'+d.title+'</h2><p>'+d.date+'</p></div>';
-  if(d.id===1)h+='<div class="route-bar"><strong>路线：</strong>成都东站 → 东城小居 → 建设路小吃街 → 望平街</div>';
-  if(d.id===2)h+='<div class="route-bar"><strong>路线：</strong>东城小居 → 东郊记忆 → 建设路 → 玉林综合市场 → 玉林路 → 小酒馆</div>';
+  if(d.id===1)h+='<div class="route-bar"><strong>路线：</strong>成都东站 → 东城小居 → 东郊记忆 → 望平街·香香巷</div>';
+  if(d.id===2)h+='<div class="route-bar"><strong>路线：</strong>东城小居 → 建设路（可选/避坑）→ 玉林综合市场 → 玉林路 → 小酒馆</div>';
   if(d.id===3)h+='<div class="route-bar"><strong>路线：</strong>成都 → 都江堰景区 → 灌县古城 → 三星堆博物馆 → 都江堰</div>';
   if(d.id===4)h+='<div class="route-bar"><strong>路线：</strong>都江堰 → 正成·财富ID → 太古里 → 望平街 → 九眼桥</div>';
   if(main.length){h+='<div class="section-head">行程</div><div class="timeline">';main.forEach(l=>h+=locCard(l,idx));h+='</div>'}
