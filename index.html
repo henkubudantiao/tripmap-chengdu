@@ -63,7 +63,8 @@ var XHS=[
 {id:"64b397cb0000000016025a6b",title:"成都喝茶攻略 来碗成都盖碗茶",likes:"1852"}
 ];
 function xu(id){return "https://www.xiaohongshu.com/explore/"+id}
-function xb(i,l){return "<a href=\""+xu(i)+"\" target=\"_blank\" class=\"btn xhs\">"+(l||"小红书")+"</a>"}
+function copyUrl(url){navigator.clipboard.writeText(url).then(function(){showToast("已复制链接 ✓")}).catch(function(){prompt("复制链接:",url)})}
+function xb(i,l){var link=xu(i);return '<button class="btn xhs" onclick="copyUrl(\''+link+'\')">'+(l||"小红书")+"</button>"}
 function showToast(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(function(){t.classList.remove("show")},2000)}
 
 var SHOPS={
@@ -230,7 +231,7 @@ function ov(){
   var backup_html='\n<div class="section-head">📌 备选景点（未安排但值得考虑）</div>\n<div class="card">\n  <div class="name">宽窄巷子</div>\n  <div class="desc">成都最著名的旅游景点之一，由宽巷子、窄巷子、井巷子平行排列组成。青黛砖瓦的四合院落，尽享老成都的闲适。商业化较重，但拍照出片。</div>\n</div>\n<div class="card">\n  <div class="name">武侯祠</div>\n  <div class="desc">中国唯一的君臣合祀祠庙，纪念诸葛亮、刘备及蜀汉英雄。红墙竹影是经典拍照点。门票50元。</div>\n</div>\n<div class="card">\n  <div class="name">杜甫草堂</div>\n  <div class="desc">唐代诗人杜甫流寓成都时的居所，园林幽静，文化底蕴深厚。门票50元。</div>\n</div>\n<div class="card">\n  <div class="name">人民公园·鹤鸣茶社</div>\n  <div class="desc">成都最出名的茶馆，百年历史。体验老成都"龙门阵"文化。人多嘈杂是缺点，但氛围独特。盖碗茶15-30元。</div>\n</div>\n<div class="card">\n  <div class="name">青羊宫</div>\n  <div class="desc">川西第一道观，始建于周朝。闹中取静，银杏季极美。门票10元。</div>\n</div>\n<div class="section-head">🍽️ 备选食店（评论区推荐但未安排）</div>\n<div class="card">\n  <div class="name">冒椒火辣（奎星楼街）</div>\n  <div class="desc">成都串串网红店，兔腰必点。排队时间长，建议错峰。「玉林本地人来说，就冒椒火辣好吃」22赞</div>\n</div>\n<div class="card">\n  <div class="name">共享椒麻鸡（玉林路）</div>\n  <div class="desc">椒麻鸡专门店，麻香浓郁。「共享椒麻鸡真的不错，经常点外卖」4赞。适合喜欢麻味的食客。</div>\n</div>\n<div class="card">\n  <div class="name">夺爷炒螺蛳·渝味江湖菜（玉林）</div>\n  <div class="desc">老社区宝藏店，香辣蟹和干烧呱呱是招牌。「太喜欢玉林这种老社区宝藏店！」2赞</div>\n</div>\n<div class="card">\n  <div class="name">爱恨怪豆花（望平街）</div>\n  <div class="desc">酸汤火锅专门店，贵州风味。汤底酸辣开胃，适合夏天。「好多料啥子都可以尝到一点好吃好吃」8赞</div>\n</div>\n<div class="card">\n  <div class="name">松扣扣（海椒市）</div>\n  <div class="desc">贵州酸汤火锅，本地人口碑好。「如果是贵州酸汤真的推荐你吃松扣扣」45赞</div>\n</div>\n<div class="card">\n  <div class="name">椰坝坝+鱼汤婆婆（玉林路）</div>\n  <div class="desc">椰坝坝主打椰子甜品，鱼汤婆婆主打鱼汤粉面。「椰坝坝和鱼汤婆婆好吃」9赞。适合甜品+轻食搭配。</div>\n</div>\n<div class="card">\n  <div class="name">野果子杂食店（芳草街）</div>\n  <div class="desc">融合料理小食堂，人均60-70元。咖喱饭、意面、水牛芝士披萨都不错。适合不想吃辣的时候。</div>\n</div>\n<div class="card">\n  <div class="name">甜匠甜品自助（芳草街）</div>\n  <div class="desc">39元甜品自助，性价比极高。适合下午茶时段补充能量。</div>\n</div>\n';
   var xl="";
   XHS.forEach(function(x,i){
-    xl+='<div class="shop-item"><div class="shop-name">'+(i+1)+". "+x.title+'</div><div class="shop-desc">'+x.likes+'赞</div><div class="xhs-link" onclick="window.open(\''+xu(x.id)+"')\">查看原文</div></div>";
+    xl+='<div class="shop-item"><div class="shop-name">'+(i+1)+'. '+x.title+'</div><div class="shop-desc">'+x.likes+'\u8d5e</div><div class="xhs-link" onclick="copyUrl(\''+xu(x.id)+'\')">\u590d\u5236\u94fe\u63a5</div></div>';
   });
   return '<div class="hero"><h1>成都 都江堰 三星堆</h1><p class="sub">5天深度游 201条笔记+1438条评论数据驱动</p></div>'+
   '<div class="info-grid">'+
@@ -262,8 +263,6 @@ function ov(){
   '<div class="warn"><strong>古城蛋烘糕</strong>：「三轮车上的不好吃」「最好吃的是五桂桥街口的胡记」</div>'+
   '<div class="warn"><strong>芳草街某店</strong>：「坑得一逼，难吃不说东西还不新鲜，而且还死贵」8赞</div>'+
   '<div class="warn"><strong>点将台烧烤</strong>：「炸的太干了，基本没啥炭烤的香味了，距离远不值得专门去」3赞</div>'+
-  '<div class="section-head">可选参考（本地人不优先推荐）</div>'+
-  st("opt",SHOPS.optional,"可选景点/店铺")+
   backup_html+'<div class="section-head">数据来源（201条笔记+1438条评论）</div>'+
   st("xhs_all",XHS.map(function(x){return{name:x.title,desc:x.likes+"赞"}}),"全部高赞笔记");
 }
