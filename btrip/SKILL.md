@@ -1,12 +1,13 @@
 # Btrip - 旅行攻略 HTML 地图生成器
 
-生成单文件 HTML 旅行攻略，包含交互式地图、时间线行程、小红书数据驱动的店铺推荐。
+生成单文件 HTML 旅行攻略，包含交互式地图、时间线行程、小红书数据驱动的店铺推荐、模糊搜索。
 
 ## 核心特性
-- Leaflet 地图 + CartoDB Light 底图（⚠️ Leaflet 必须内联，CDN 国内加载不了）
+- Leaflet 地图 + CartoDB Light 底图
 - 按天分 Tab，Apple 风格 UI
 - 小红书高赞笔记 + 评论区实测数据
 - **SHOPS 店铺推荐系统**：可展开的区域店铺列表，含评论引用、推荐菜品
+- **模糊搜索**：全量笔记+评论内嵌，支持标题/描述/评论内容搜索
 - 导航 Action Sheet（Apple Maps / 高德 / 百度）
 - 移动端优先，触控友好
 
@@ -31,16 +32,6 @@
 | 饮食偏好 | 忌口、偏好（如：当地人喜欢的、非连锁店） |
 | 特殊要求 | 避坑、商业化程度、预约需求等 |
 
-**问法示例**：
-> 开始做攻略前需要确认几个信息：
-> 1. 几个人去？什么关系（朋友/情侣/家庭）？
-> 2. 到达和离开的具体交通方式和时间？
-> 3. 有没有一定要去的地方？
-> 4. 住宿订了没？在哪个区域？（最好给我精确地址，我根据位置规划线路）
-> 5. 节奏偏好？轻松逛吃还是紧凑打卡？
-> 6. 吃的有什么偏好？（比如：喜欢当地人去的、不要连锁店）
-> 7. 还有什么特殊要求？
-
 ### 第二步：初步线路规划
 根据用户需求和**住宿位置**，先规划大致行程线路（按天分配景点/区域）：
 - 住宿地址是线路规划的核心锚点，每天的行程围绕住宿位置展开
@@ -63,17 +54,72 @@
 
 ---
 
-## 用户常见优化需求（来自实际制作经验）
+## 模板说明（v8.0）
+
+模板文件：`template.html`（基于成都攻略 v8.0）
+
+### 关键技术要点
+
+1. **JS 引号处理**：所有 onclick 内嵌的字符串用 `\x27`（十六进制单引号）代替 `\'`，避免嵌套引号导致语法错误
+2. **搜索框事件绑定**：搜索 input 通过 `addEventListener('input', doSearch)` 绑定，同时保留内联 `oninput` 兜底（手机浏览器兼容）
+3. **搜索结果样式**：
+   - 笔记：标题 + 单行可滑动简介（自动滚动到关键词） + ❤️赞数按钮（点击复制链接）
+   - 评论：评论内容 + 点赞数
+4. **数据内嵌**：NOTES（笔记）和 CMTS（评论）全量内嵌在 `<script>` 中
+5. **CSS 搜索样式**：搜索相关 CSS 写在 `<style>` 块内部，不能放在 `</style>` 外面
+
+### 数据结构
+
+```js
+// 笔记数据（精简版，用于搜索）
+var NOTES=[{id:"...", t:"标题", d:"描述前200字", l:"点赞数", k:"作者", kw:"来源关键词"}];
+
+// 评论数据（精简版，用于搜索）
+var CMTS=[{id:"...", nid:"关联笔记id", c:"评论内容前150字", l:点赞数, n:"评论者"}];
+
+// 小红书笔记（页面展示用）
+var XHS=[{id:"...", title:"...", likes:"..."}];
+
+// 店铺推荐
+var SHOPS={区域id:[{name:"店名", desc:"介绍", quote:"「评论引用」", tags:["标签"], dishes:"推荐菜品"}]};
+
+// 每日行程
+var DAYS=[{id:0, label:"总览", color:"#0071e3"}, {id:1, label:"D1·到达", date:"...", title:"...", color:"#ff9500", locations:[...]}];
+```
+
+### 搜索功能实现
+
+```js
+// 模糊匹配（支持中文部分匹配）
+function fuzzyMatch(text,q){
+  if(!text||!q)return -1;
+  text=text.toLowerCase();q=q.toLowerCase();
+  var i=text.indexOf(q);
+  if(i>=0)return i;
+  var ti=0;
+  for(var qi=0;qi<q.length;qi++){ti=text.indexOf(q[qi],ti);if(ti<0)return -1;ti++;}
+  return 0;
+}
+
+// 搜索结果渲染后，自动滚动到关键词位置
+document.querySelectorAll('.sr-desc').forEach(function(el){
+  var mark=el.querySelector('mark');
+  if(mark){el.scrollLeft=mark.offsetLeft-el.offsetLeft-20;}
+});
+```
+
+---
+
+## 用户常见优化需求
 
 ### 🔴 必须做到的
-1. **天数不能算错** — 用户说"16号下午到，20号高铁离开"是 5 天（D1-D5），不是 4 天！
-2. **住宿地址精确到门牌号** — 如"成华区双桥路249号附18号东城小居"，用于计算每天出发距离
+1. **天数不能算错** — "16号下午到，20号高铁离开" = 5天（D1-D5），不是4天！
+2. **住宿地址精确到门牌号** — 用于计算每天出发距离
 3. **数据采集要丰富** — 正文+评论都要，不能只采标题
 4. **原话引用** — 评论区精选用「」包裹，保留原话，带❤️点赞数
 5. **餐馆列出推荐菜品** — 不只要店名，要具体菜品+价格
 6. **非连锁本地店优先** — 商业化严重的商场类景点优先级很低
-7. **Leaflet 必须内联** — CDN 在国内加载不了，页面会空白！
-8. **去掉"好兄弟"等口语** — 保留"2人"即可
+7. **去掉"好兄弟"等口语** — 保留"2人"即可
 
 ### 🟡 质量要求
 - SHOPS 每个店铺**必须有 quote**（小红书评论区精选原话）
@@ -88,6 +134,14 @@
 
 ---
 
+## MediaCrawler 使用要点
+- **路径**：`/root/MediaCrawler/`
+- **运行**：`cd /root/MediaCrawler && ./venv/bin/python main.py --platform xhs --type search --keywords "关键词"`
+- **Cookie 配置**：`config/base_config.py` 中的 `COOKIES` 字段
+- **⚠️ 评论文件每次启动会清空**：必须先备份再重启爬虫
+- **保存数据**：笔记在 `search_contents_*.json`，评论在 `search_comments_*.json`
+- **采集间隔**：每个关键词之间等待足够时间（120-180秒），避免被封
+
 ## 数据保存规范
 所有采集数据保存在 `{目的地}/xhs-data/` 文件夹中：
 ```
@@ -99,33 +153,6 @@
 └── ...
 ```
 
----
-
-## MediaCrawler 使用要点
-- **路径**：`/root/MediaCrawler/`
-- **运行**：`cd /root/MediaCrawler && ./venv/bin/python main.py --platform xhs --type search --keywords "关键词"`
-- **Cookie 配置**：`config/base_config.py` 中的 `COOKIES` 字段
-- **⚠️ 评论文件每次启动会清空**：必须先备份再重启爬虫
-- **保存数据**：笔记在 `search_contents_*.json`，评论在 `search_comments_*.json`
-- **采集间隔**：每个关键词之间等待足够时间（120-180秒），避免被封
-
-## 数据结构
-- `XHS[]`：小红书笔记数组 `{id, title, likes}`
-- `SHOPS{}`：按区域分组的店铺推荐 `{name, desc, quote, tags, dishes, url}`
-- `DAYS[]`：每日行程 `{id, label, date, title, color, locations[]}`
-- `location.xhs[]`：关联笔记 `[{id, label}]`
-- `location.detail`：展开详情（保留换行）
-
-## HTML 关键规则
-1. **XHS 用 id 拼 URL**：`xhsUrl(id)` → `https://www.xiaohongshu.com/explore/{id}`
-2. **SHOPS 必须有 quote**：小红书评论区精选，用「」包裹，带❤️点赞数
-3. **shopToggle 自动关联**：在 locCard 中按景点名称匹配 SHOPS key
-4. **酒店常驻地图**：橙色 marker，始终显示
-5. **路线 bar**：每个 D-day 头部显示当日路线概要
-6. **总览页**：info-grid（人数/住宿/节奏/离开）+ 行程概览 + 住宿推荐 + 预约清单 + 小红书合集
-7. **避坑警告**：评论区差评多的景点/店铺要标注⚠️
-8. **⚠️ Leaflet 必须内联**：从 CDN 加载在国内会失败，必须把 Leaflet JS+CSS 内联进 HTML
-
 ## 参考文件
-- `template.html`：最新模板（v5.0）
+- `template.html`：最新模板（v8.0）
 - `references/design-spec.md`：设计规范
