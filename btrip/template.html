@@ -225,9 +225,9 @@ xhs:[{id:"6991c9450000000015030661",label:"三星堆攻略"}]},
 {name:"浣花溪公园喝茶",lat:30.665,lng:104.035,type:"drink",time:"15:00",desc:"本地人推荐，比人民公园安静",
 detail:"评论区实测：\n「别去什么人民公园啦！」915赞\n「浣花溪公园内有5个喝茶的地方」\n「本地人带去的，地道老成都松弛感茶馆」630赞\n「百花潭公园15元一杯」56赞\n\n川西茶廊、观澜堂、知竹吧等",
 xhs:[{id:"66075c7a0000000013024df1",label:"鹤鸣茶社"},{id:"64b397cb0000000016025a6b",label:"喝茶攻略"}]},
-{name:"正成 财富ID",lat:30.655,lng:104.075,type:"hotel",time:"17:30",desc:"锦江区新住宿，放行李"},
-{name:"太古里",lat:30.657,lng:104.082,type:"spot",time:"18:00",desc:"成都最潮商圈，逛逛就行",
-detail:"大慈寺就在旁边，闹中取静\n逛逛就行，不一定买"},
+{name:"海椒市街4号",lat:30.643,lng:104.088,type:"hotel",time:"17:30",desc:"锦江区海椒市街4号（酒店大厅附16号）"},
+{name:"海椒市附近觅食",lat:30.643,lng:104.088,type:"food",time:"18:00",desc:"酒店周边本地人美食",
+detail:"松扣扣（贵州酸汤）：「如果是贵州酸汤 真的推荐你吃松扣扣 海椒市那边」45赞\n泼辣芋儿鸡：「无敌推荐鸡脚 又耙又糯」1738赞\n附近还有各种苍蝇馆子"},
 {name:"九眼桥 廊桥",lat:30.648,lng:104.085,type:"spot",time:"19:30",desc:"安顺廊桥，成都夜景地标",
 detail:"「灯光亮起来太美了」「建议晚上7-8点去」",
 xhs:[{id:"68b176e0000000001c03023d",label:"九眼桥攻略"}]},
@@ -235,8 +235,8 @@ xhs:[{id:"68b176e0000000001c03023d",label:"九眼桥攻略"}]},
 ]},
 {id:5,label:"D5 离开",date:"6月20日",title:"最后一逛，天府起飞",color:"#8e8e93",
 locations:[
-{name:"正成 财富ID退房",lat:30.655,lng:104.075,type:"transport",time:"08:30",desc:"睡到自然醒"},
-{name:"最后一逛",lat:30.655,lng:104.075,type:"spot",time:"09:30",desc:"锦江区周边走走"},
+{name:"海椒市街4号退房",lat:30.643,lng:104.088,type:"transport",time:"08:30",desc:"睡到自然醒"},
+{name:"最后一逛",lat:30.643,lng:104.088,type:"spot",time:"09:30",desc:"海椒市附近吃个早餐"},
 {name:"前往天府机场",lat:30.655,lng:104.075,type:"transport",time:"13:30",desc:"必须13:30出发！"},
 {name:"起飞",lat:30.315,lng:104.443,type:"transport",time:"17:00",desc:"成都再见！"}
 ]}
@@ -252,7 +252,7 @@ function ov(){
   '<div class="info-grid">'+
   '<div class="info-card"><div class="label">人数</div><div class="value">2人</div></div>'+
   '<div class="info-card"><div class="label">节奏</div><div class="value">深度逛吃，不赶场</div></div>'+
-  '<div class="info-card"><div class="label">住宿</div><div class="value">D1/D2 成华区双桥路<br>D3 都江堰北街<br>D4/D5 锦江区</div></div>'+
+  '<div class="info-card"><div class="label">住宿</div><div class="value">D1/D2 成华区双桥路<br>D3 都江堰北街<br>D4/D5 海椒市街</div></div>'+
   '<div class="info-card"><div class="label">离开</div><div class="value">6.20 天府T2 17:00</div></div>'+
   '</div>'+
   '<div class="section-head">行程概览</div>'+
@@ -289,7 +289,7 @@ function ic(c,e){
 
 L.marker([H1.lat,H1.lng],{icon:ic("#ff9500",""),zIndexOffset:1000}).addTo(map).bindPopup("<b>D1/D2 酒店</b><br>成华区双桥路");
 L.marker([H2.lat,H2.lng],{icon:ic("#ff9500",""),zIndexOffset:1000}).addTo(map).bindPopup("<b>D3 酒店</b><br>都江堰北街");
-L.marker([H3.lat,H3.lng],{icon:ic("#ff9500",""),zIndexOffset:1000}).addTo(map).bindPopup("<b>D4/D5 酒店</b><br>锦江区正成 财富ID");
+L.marker([H3.lat,H3.lng],{icon:ic("#ff9500",""),zIndexOffset:1000}).addTo(map).bindPopup("<b>D4/D5 酒店</b><br>锦江区海椒市街4号");
 
 var markers=[],polylines=[];
 var emojis={food:"",spot:"",hotel:"",transport:"",drink:""};
@@ -350,7 +350,7 @@ function rd(di){
   if(d.id===1)h+='<div class="route-bar"><strong>路线：</strong>成都东站 东城小居 东郊记忆 望平街 香香巷</div>';
   if(d.id===2)h+='<div class="route-bar"><strong>路线：</strong>东城小居 芳华街 芳草街 玉林综合市场 玉林路 小酒馆</div>';
   if(d.id===3)h+='<div class="route-bar"><strong>路线：</strong>成都 都江堰景区 灌县古城 南桥 都江堰住宿</div>';
-  if(d.id===4)h+='<div class="route-bar"><strong>路线：</strong>都江堰 三星堆 成都 浣花溪喝茶 太古里 九眼桥</div>';
+  if(d.id===4)h+='<div class="route-bar"><strong>路线：</strong>都江堰 三星堆 成都 浣花溪喝茶 海椒市 九眼桥</div>';
   if(main.length){h+='<div class="section-head">行程</div><div class="timeline">';main.forEach(function(l){h+=lc(l,di)});h+="</div>";}
   return h;
 }
