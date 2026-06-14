@@ -148,7 +148,15 @@ taikoo:[
 {name:"大慈寺",desc:"太古里旁千年古刹，免费",quote:"「闹中取静」",tags:["寺庙","免费"]}
 ],
 jiuyanqiao:[
-{name:"安顺廊桥",desc:"成都夜景地标",quote:"「灯光亮起来太美了」「建议晚上7-8点去」",tags:["夜景"]}
+{name:"安顺廊桥",desc:"成都夜景地标",quote:"「灯光亮起来太美了」「建议晚上7-8点去」",tags:["夜景"]},
+{name:"無早小食",desc:"九眼桥附近氛围感餐厅",quote:"「牛肉芝士可乐饼 溏心蛋芦笋虾仁沙拉 百香果酸汤粉 都很好吃」",tags:["川菜","氛围"],dishes:"牛肉芝士可乐饼、溏心蛋芦笋虾仁沙拉、百香果酸汤粉"},
+{name:"多恩餐厅Dawn Bistro",desc:"东安南路，九眼桥步行可达",tags:["西餐","氛围"]}
+],
+haijiao:[
+{name:"干海椒抄手",desc:"居民楼里的老店，海椒市街10-1号",quote:"「真正是在居民楼里的店店 干海椒抄手可以盲点」1738赞",tags:["抄手","老店"],dishes:"干海椒抄手、土鸡竹荪汤抄手、鲜虾蟹籽抄手"},
+{name:"温记府廟豆汤饭",desc:"海椒市街一区60号附48号",quote:"「必点拐子肉」",tags:["豆汤饭","老店"],dishes:"拐子肉豆汤饭"},
+{name:"松扣扣",desc:"海椒市附近，贵州酸汤",quote:"「贵州酸汤 真的推荐你吃松扣扣 海椒市那边」45赞",tags:["贵州菜","酸汤"]},
+{name:"三哥田螺",desc:"海椒市附近",quote:"「所有都好吃！价格偏贵但真好吃」",tags:["爆炒","田螺"]}
 ],
 };
 
@@ -226,12 +234,13 @@ xhs:[{id:"6991c9450000000015030661",label:"三星堆攻略"}]},
 detail:"评论区实测：\n「别去什么人民公园啦！」915赞\n「浣花溪公园内有5个喝茶的地方」\n「本地人带去的，地道老成都松弛感茶馆」630赞\n「百花潭公园15元一杯」56赞\n\n川西茶廊、观澜堂、知竹吧等",
 xhs:[{id:"66075c7a0000000013024df1",label:"鹤鸣茶社"},{id:"64b397cb0000000016025a6b",label:"喝茶攻略"}]},
 {name:"海椒市街4号",lat:30.643,lng:104.088,type:"hotel",time:"17:30",desc:"锦江区海椒市街4号（酒店大厅附16号）"},
-{name:"海椒市附近觅食",lat:30.643,lng:104.088,type:"food",time:"18:00",desc:"酒店周边本地人美食",
-detail:"松扣扣（贵州酸汤）：「如果是贵州酸汤 真的推荐你吃松扣扣 海椒市那边」45赞\n泼辣芋儿鸡：「无敌推荐鸡脚 又耙又糯」1738赞\n附近还有各种苍蝇馆子"},
+{name:"海椒市觅食",lat:30.643,lng:104.088,type:"food",time:"18:00",desc:"酒店周边本地美食圈",
+detail:"干海椒抄手：「真正是在居民楼里的店店 干海椒抄手可以盲点」1738赞 海椒市街10-1号\n温记府廟豆汤饭：「必点拐子肉」海椒市街一区60号附48号\n松扣扣贵州酸汤：「贵州酸汤 真的推荐你吃松扣扣」45赞\n三哥田螺：「所有都好吃！价格偏贵但真好吃」"},
 {name:"九眼桥 廊桥",lat:30.648,lng:104.085,type:"spot",time:"19:30",desc:"安顺廊桥，成都夜景地标",
 detail:"「灯光亮起来太美了」「建议晚上7-8点去」",
 xhs:[{id:"68b176e0000000001c03023d",label:"九眼桥攻略"}]},
-{name:"九眼桥晚餐",lat:30.648,lng:104.085,type:"food",time:"20:00",desc:"附近找吃的"}
+{name:"九眼桥晚餐",lat:30.648,lng:104.085,type:"food",time:"20:00",desc:"九眼桥附近觅食",
+detail:"無早小食：「牛肉芝士可乐饼 溏心蛋芦笋虾仁沙拉 百香果酸汤粉」锦江区青莲上街5号附2号 107赞\n多恩餐厅Dawn Bistro：锦江区东安南路29号\n九眼桥酒吧街：廊桥附近，吃完饭散步喝小酒"}
 ]},
 {id:5,label:"D5 离开",date:"6月20日",title:"最后一逛，天府起飞",color:"#8e8e93",
 locations:[
@@ -339,6 +348,8 @@ function lc(loc,di){
   if(loc.name.indexOf("浣花溪")>=0)sh=st("hx_"+di,SHOPS.huaxi_tea,"浣花溪喝茶");
   if(loc.name.indexOf("太古里")>=0)sh=st("tk_"+di,SHOPS.taikoo,"太古里");
   if(loc.name.indexOf("九眼桥")>=0&&loc.type==="spot")sh=st("jyq_"+di,SHOPS.jiuyanqiao,"九眼桥");
+  if(loc.name.indexOf("海椒市")>=0&&loc.type==="food")sh=st("hjs_"+di,SHOPS.haijiao,"海椒市美食");
+  if(loc.name.indexOf("九眼桥")>=0&&loc.type==="food")sh=st("jyq_f_"+di,SHOPS.jiuyanqiao,"九眼桥附近");
   return '<div class="tl-item"><div class="tl-dot '+dot+'"></div><div class="card" onclick="if(!event.target.closest(\'.btn,.links,.shop-toggle,.shop-list,.xhs-link\'))tg(\''+uid+'\')"><div class="time">'+(loc.time!=="-"?loc.time:"备选")+'</div><div class="name">'+bdg+" "+loc.name+'</div><div class="desc">'+loc.desc+"</div>"+(loc.budget?'<div class="budget">'+loc.budget+"</div>":"")+'<div class="links">'+lnk+"</div>"+(loc.detail?'<div class="details" id="'+uid+'">'+loc.detail.replace(/\n/g,"<br>")+"</div>":"")+sh+"</div></div>";
 }
 
