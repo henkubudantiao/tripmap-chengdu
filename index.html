@@ -65,7 +65,7 @@ mark{background:rgba(255,149,0,.2);color:inherit;border-radius:2px;padding:0 1px
 <div class="toast" id="toast"></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-var H1={name:"东城小居（成华区双桥路）",lat:30.665,lng:104.110};
+var H1={name:"正成·财富ID（锦江区）",lat:30.649,lng:104.088};
 var H2={name:"都江堰市北街38号",lat:30.997,lng:103.652};
 var H3={name:"正成·财富ID（锦江区）",lat:30.655,lng:104.075};
 var XHS=[
@@ -158,6 +158,190 @@ haijiao:[
 {name:"松扣扣",desc:"海椒市附近，贵州酸汤",quote:"「贵州酸汤 真的推荐你吃松扣扣 海椒市那边」45赞",tags:["贵州菜","酸汤"]},
 {name:"三哥田螺",desc:"海椒市附近",quote:"「所有都好吃！价格偏贵但真好吃」",tags:["爆炒","田螺"]}
 ],
+niushikou:[
+{name:"牛市口铁板烧",desc:"藏在老小区里的铁板烧，糖醋麻辣味一绝",quote:"「一周会去吃三次的那种！一定要试试糖醋麻辣味」7254赞｜「三个人点很多吃下来人均才22」66赞",tags:["铁板烧","苍蝇馆子"],dishes:"糖醋麻辣铁板烧（必点）、铁板土豆、铁板年糕"},
+{name:"烟火匠炭烤烧烤",desc:"牛市口纯炭火烧烤，黄油烤鸡是招牌",quote:"「纯炭烤！真的宇宙无敌无解好吃！！！！！」6赞｜「竟然在牛市口吃到巨美味的黄油烤鸡了」1091赞",tags:["烧烤","夜宵"],dishes:"黄油烤鸡（必点）、牛胸口薯片、烟熏小豆腐、烤牛胸膘"},
+{name:"曾浩驰老成都串串香",desc:"钢管厂店，小时候的味道",quote:"「5天吃了3次！串串味道就是小时候吃的地道老串串」661赞｜「小时候的回忆！！！好好吃」7赞",tags:["串串","老店"],dishes:"串串必点、兔头、兔腿、冒菜"},
+{name:"家常味面馆",desc:"牛市口巷子里的面馆，棍棍面+脆哨",quote:"「藏在牛市口！巷子里面的一家面馆！超爱这种吸满汁儿黏糊糊的面条」599赞｜「素椒杂酱面加脆哨，个人口味很喜欢」666赞",tags:["面馆","老店"],dishes:"素椒杂酱面加脆哨（必点）、哨子面"},
+{name:"五里关火锅",desc:"牛市口店，重庆火锅，辣度不能选",quote:"「吃辣选手非常推荐 菜品味道都很不错」｜「冰汤圆还可以无限续冰沙」",tags:["火锅","重庆味"],dishes:"耙鸡爪、鲜鸭血、蟹柳、红糖糍粑"},
+{name:"牛市口越南Pho",desc:"石锅火车头，留学生推荐的正宗越南粉",quote:"「西贡还原度85%，汤头是牛骨熬的有放沙葛甘蔗，牛肉是贵州黄牛肉非常新鲜」421赞",tags:["越南菜","Pho"],dishes:"石锅火车头（必点）、猪肉棒"},
+{name:"落舌冒菜",desc:"牛市口本地人推荐的老式冒菜",quote:"「牛市口土著喜欢吃的有：节子串串 油卤串串 落舌冒菜 私房水饺」37赞",tags:["冒菜","苍蝇馆子"]},
+{name:"私房水饺",desc:"牛市口本地人的私藏水饺",quote:"「牛市口小学土著喜欢吃的有：节子串串 落舌冒菜 私房水饺」37赞",tags:["水饺","老店"]},
+{name:"鸡毛店川菜",desc:"社区老店，家庭聚餐首选",quote:"「必点锅边馍、花椒兔 社区老店」",tags:["川菜","社区店"],dishes:"锅边馍、花椒兔"},
+{name:"龟锅烤肉",desc:"牛市口新开烤肉",quote:"「成都首家！终于开了。。。。。」784赞",tags:["烤肉","新店"]}
+],
+};
+var LOC_RECS={
+"正成·财富ID":{
+ sight:[
+  {name:"牛市口社区",desc:"成都本地人聚集的老街区，烟火气十足",quote:"「藏在成都老小区里面的一家」"}
+ ],
+ food:[
+  {name:"牛市口铁板烧",desc:"老小区铁板烧，糖醋麻辣味一绝",quote:"「一周会去吃三次的那种！」7254赞｜「三个人人均才22」66赞",dishes:"糖醋麻辣铁板烧（必点）、铁板土豆、铁板年糕"},
+  {name:"烟火匠炭烤烧烤",desc:"纯炭火烧烤，黄油烤鸡是招牌",quote:"「宇宙无敌无解好吃！！！！！」6赞｜「巨美味的黄油烤鸡」1091赞",dishes:"黄油烤鸡（必点）、牛胸口薯片、烟熏小豆腐"},
+  {name:"曾浩驰老成都串串香",desc:"钢管厂店，小时候的味道",quote:"「5天吃了3次！串串味道就是小时候吃的地道老串串」661赞",dishes:"串串必点、兔头、兔腿、冒菜"},
+  {name:"家常味面馆",desc:"牛市口巷子里，棍棍面+脆哨",quote:"「藏在牛市口！巷子里面的一家面馆！」599赞｜「素椒杂酱面加脆哨」666赞",dishes:"素椒杂酱面加脆哨（必点）、哨子面"},
+  {name:"五里关火锅",desc:"重庆火锅，辣度不能选",quote:"「吃辣选手非常推荐 菜品味道都很不错」",dishes:"耙鸡爪、鲜鸭血、蟹柳、红糖糍粑"},
+  {name:"牛市口越南Pho",desc:"石锅火车头，留学生推荐",quote:"「西贡还原度85%，汤头是牛骨熬的」421赞",dishes:"石锅火车头（必点）、猪肉棒"},
+  {name:"落舌冒菜",desc:"本地人推荐的老式冒菜",quote:"「牛市口土著喜欢吃的有：落舌冒菜」37赞"},
+  {name:"私房水饺",desc:"牛市口本地人的私藏水饺",quote:"「牛市口小学土著喜欢吃的有：私房水饺」37赞"},
+  {name:"鸡毛店川菜",desc:"社区老店，家庭聚餐首选",quote:"「必点锅边馍、花椒兔 社区老店」",dishes:"锅边馍、花椒兔"},
+  {name:"龟锅烤肉",desc:"新开烤肉",quote:"「成都首家！终于开了。。。。。」784赞"}
+ ]
+},
+"东郊记忆":{
+ sight:[
+  {name:"东郊记忆",desc:"工业风文创园，废弃工厂改造",quote:"「本自贡人认证确实味道不错」30赞｜「氛围感拉满」",tags:["拍照","文创"]},
+  {name:"机车头广场",desc:"园区标志，保留的老火车头",quote:"「拍照打卡必到」",tags:["拍照"]}
+ ],
+ food:[
+  {name:"东郊记忆周边小吃",desc:"园区内有多家创意小店",quote:"「拍照逛吃一条龙」"}
+ ]
+},
+"望平街 香香巷":{
+ sight:[
+  {name:"望平街",desc:"市井和港风碰撞的老街",quote:"「吃东西别再去宽窄巷子了」3202赞",tags:["拍照","港风"]},
+  {name:"香香巷",desc:"望平街里的网红巷子",quote:"「拍照港风、东西好吃、巷子不深香气四溢」｜「晚上灯亮起的时候最佳」",tags:["拍照","夜景"]}
+ ],
+ food:[
+  {name:"何师烧烤",desc:"望平街老店",quote:"「本地人推荐 何师烧烤」",dishes:"烤串"},
+  {name:"望平街小吃",desc:"沿街各种小吃",quote:"「巷子不深香气四溢」「晚上灯亮起的时候最佳」"}
+ ]
+},
+"芳华街":{
+ sight:[
+  {name:"芳华街",desc:"老社区里的文艺街区，小店扎堆",quote:"「这家蛋烘糕我吃了30年了」9赞｜「要晚点去 早上好多都没营业」6赞",tags:["文艺","社区"]}
+ ],
+ food:[
+  {name:"芳华街蛋烘糕",desc:"老店，本地人吃了30年",quote:"「这家蛋烘糕我吃了30年了」9赞",dishes:"蛋烘糕"}
+ ]
+},
+"芳草街":{
+ sight:[
+  {name:"芳草街",desc:"宝藏小店扎堆，本地人爱逛",quote:"「作为定居福建人每次去必吃」58赞",tags:["文艺"]}
+ ],
+ food:[
+  {name:"芳草街粿条",desc:"成都最佳潮汕粿条",quote:"「无法超越」4717赞｜「真的好吃晕了」2335赞",dishes:"粿条"},
+  {name:"芳草街小食堂",desc:"新开宝藏小店",quote:"「新开的小食堂 人均60-70」2290赞",dishes:"家常菜"}
+ ]
+},
+"玉林综合市场":{
+ sight:[
+  {name:"玉林综合市场",desc:"本地人的菜市场，烟火气十足",quote:"「这才是真正的成都味道」",tags:["菜市场","烟火气"]}
+ ],
+ food:[
+  {name:"王妈手撕烤兔",desc:"排队20分钟但值得",quote:"「排队20分钟但值得」",dishes:"手撕烤兔"},
+  {name:"叶婆婆钵钵鸡",desc:"红油很香",quote:"「叶婆婆钵钵鸡红油很香」",dishes:"钵钵鸡"},
+  {name:"甘记肥肠粉",desc:"加个节子才完整",quote:"「加个节子才完整」",dishes:"肥肠粉加节子"},
+  {name:"奇味烤兔",desc:"开了十多年二十年",quote:"「奇味烤兔开的是最久的 有十多年二十年了」28赞",dishes:"烤兔"}
+ ]
+},
+"玉林路":{
+ sight:[
+  {name:"玉林路",desc:"赵雷《成都》里的玉林路",quote:"「走到玉林路的尽头 坐在小酒馆的门口」",tags:["文艺","打卡"]}
+ ],
+ food:[
+  {name:"冒椒火辣",desc:"玉林路必吃串串",quote:"「冒椒火辣好吃」22赞",dishes:"串串"},
+  {name:"顶破天铁板烧",desc:"鱿鱼丝和蛋炒饭一绝",quote:"「顶破天铁板烧确实好吃 鱿鱼丝和蛋炒饭一绝」189赞",dishes:"鱿鱼丝、蛋炒饭"},
+  {name:"椰坝坝和鱼汤婆婆",desc:"本地人推荐",quote:"「椰坝坝和鱼汤婆婆好吃」9赞"},
+  {name:"玉滋铺",desc:"甜水面",quote:"「玉滋铺吃甜水面」44赞",dishes:"甜水面"},
+  {name:"黄记烤兔",desc:"本地人爱去",quote:"「黄记吃烤兔」44赞",dishes:"烤兔"}
+ ]
+},
+"小酒馆":{
+ sight:[
+  {name:"小酒馆",desc:"赵雷歌里的小酒馆",quote:"「驻唱还不错，酒一般，氛围好」",tags:["文艺","音乐"]}
+ ],
+ food:[]
+},
+"都江堰景区":{
+ sight:[
+  {name:"都江堰景区",desc:"世界文化遗产，2000多年水利工程",quote:"「真的会被古人的智慧震撼到」",tags:["世界遗产","必去"]},
+  {name:"鱼嘴",desc:"都江堰核心分水工程",quote:"「站在鱼嘴上看分水很震撼」",tags:["核心"]},
+  {name:"飞沙堰",desc:"泄洪排沙工程",tags:["工程"]},
+  {name:"宝瓶口",desc:"引水工程",tags:["工程"]}
+ ],
+ food:[
+  {name:"都江堰本地川菜",desc:"景区附近川菜",quote:"「钟鸭子好吃」"}
+ ]
+},
+"灌县古城":{
+ sight:[
+  {name:"灌县古城",desc:"都江堰旁的古城，免费逛",quote:"「住在灌县古城，逛夜景」",tags:["古城","免费"]},
+  {name:"南桥",desc:"都江堰标志，夜景绝美",quote:"「晚上灯光亮起特别美」",tags:["夜景","免费"]}
+ ],
+ food:[
+  {name:"新繁牛肉豆花",desc:"都江堰特色",quote:"「黑芝麻水饺才是最好吃的」19赞",dishes:"牛肉豆花、黑芝麻水饺"}
+ ]
+},
+"都江堰住宿":{
+ sight:[
+  {name:"灌县古城夜景",desc:"住在古城里的好处就是可以逛夜景",quote:"「住在灌县古城 距离景区入口步行可达」",tags:["夜景"]}
+ ],
+ food:[
+  {name:"新繁牛肉豆花",desc:"都江堰特色",quote:"「黑芝麻水饺才是最好吃的」19赞",dishes:"牛肉豆花、黑芝麻水饺"},
+  {name:"都江堰夜市",desc:"古城附近的夜市"}
+ ]
+},
+"三星堆博物馆":{
+ sight:[
+  {name:"三星堆博物馆",desc:"古蜀文明，青铜大面具必看",quote:"「看完觉得震撼」「建议请讲解」",tags:["博物馆","必去"]},
+  {name:"青铜大立人",desc:"三星堆标志",tags:["国宝"]},
+  {name:"祭祀坑",desc:"考古现场",tags:["考古"]}
+ ],
+ food:[
+  {name:"三星堆餐厅",desc:"景区内简餐"}
+ ]
+},
+"春熙路":{
+ sight:[
+  {name:"春熙路",desc:"成都最繁华的商业街",quote:"「成都的标志 一定要逛」",tags:["商圈"]},
+  {name:"IFS熊猫",desc:"楼顶大熊猫爬墙雕塑",quote:"「一定要去楼顶和熊猫合照」",tags:["拍照","打卡"]}
+ ],
+ food:[
+  {name:"龙抄手总店",desc:"春熙路老字号",dishes:"龙抄手、钟水饺"},
+  {name:"春熙路小吃",desc:"沿街小吃众多"}
+ ]
+},
+"太古里":{
+ sight:[
+  {name:"太古里",desc:"成都最潮商圈，大慈寺旁",quote:"「拍照好看」「奢侈品多，逛逛就行」",tags:["商圈","潮流"]},
+  {name:"大慈寺",desc:"太古里旁千年古刹，免费",quote:"「闹中取静」",tags:["寺庙","免费"]}
+ ],
+ food:[
+  {name:"太古里餐饮",desc:"高端餐饮聚集"}
+ ]
+},
+"九眼桥":{
+ sight:[
+  {name:"安顺廊桥",desc:"成都夜景地标",quote:"「灯光亮起来太美了」「建议晚上7-8点去」",tags:["夜景"]},
+  {name:"兰桂坊",desc:"成都酒吧街",quote:"「九眼桥酒吧一条街」",tags:["夜生活"]}
+ ],
+ food:[
+  {name:"無早小食",desc:"九眼桥附近氛围感餐厅",quote:"「牛肉芝士可乐饼 溏心蛋芦笋虾仁沙拉 百香果酸汤粉 都很好吃」",dishes:"牛肉芝士可乐饼、溏心蛋芦笋虾仁沙拉"},
+  {name:"多恩餐厅Dawn Bistro",desc:"东安南路，九眼桥步行可达",dishes:"西餐"}
+ ]
+},
+"浣花溪喝茶":{
+ sight:[
+  {name:"浣花溪公园",desc:"本地人推荐，比人民公园安静",quote:"「别去什么人民公园啦！」915赞｜「本地人带去的，地道老成都松弛感茶馆」630赞",tags:["公园","喝茶"]}
+ ],
+ food:[
+  {name:"川西茶廊",desc:"浣花溪公园内喝茶",quote:"「浣花溪公园内有5个喝茶的地方」",dishes:"盖碗茶"},
+  {name:"百花潭公园",desc:"离宽窄巷子不远",quote:"「再推荐一个百花潭公园，15元一杯」56赞",dishes:"盖碗茶15元"}
+ ]
+},
+"海椒市":{
+ sight:[
+  {name:"海椒市",desc:"老成都美食街，本地人的宝藏",quote:"「这才是真正的成都美食街」",tags:["美食街"]}
+ ],
+ food:[
+  {name:"干海椒抄手",desc:"居民楼里的老店，海椒市街10-1号",quote:"「真正是在居民楼里的店店 干海椒抄手可以盲点」1738赞",dishes:"干海椒抄手、土鸡竹荪汤抄手、鲜虾蟹籽抄手"},
+  {name:"温记府廟豆汤饭",desc:"海椒市街一区60号附48号",quote:"「必点拐子肉」",dishes:"拐子肉豆汤饭"},
+  {name:"松扣扣",desc:"海椒市附近，贵州酸汤",quote:"「贵州酸汤 真的推荐你吃松扣扣 海椒市那边」45赞",dishes:"酸汤"},
+  {name:"三哥田螺",desc:"海椒市附近",quote:"「所有都好吃！价格偏贵但真好吃」",dishes:"田螺"}
+ ]
+}
 };
 
 function st(id,shops,title){
@@ -172,6 +356,33 @@ function st(id,shops,title){
   h+='</div>';
   return h;
 }
+function recs(id,data,title){
+  var sight=data.sight||[];
+  var food=data.food||[];
+  var total=sight.length+food.length;
+  if(!total)return "";
+  var h='<div class="shop-toggle" data-target="'+id+'" onclick="ts(\''+id+'\')"><span> '+title+"（"+total+"条推荐）</span><span class='arrow'></span></div>";
+  h+='<div class="shop-list" id="'+id+'">';
+  if(sight.length){
+    h+='<div style="font-weight:700;color:#0071e3;margin:6px 0 4px"> 景点（'+sight.length+'）</div>';
+    sight.forEach(function(s){
+      h+='<div class="shop-item"><div class="shop-name">'+s.name+'</div><div class="shop-desc">'+s.desc+"</div>";
+      if(s.quote) h+='<div class="shop-quote">'+s.quote+"</div>";
+      h+='</div>';
+    });
+  }
+  if(food.length){
+    h+='<div style="font-weight:700;color:#ff9500;margin:10px 0 4px"> 美食（'+food.length+'）</div>';
+    food.forEach(function(s){
+      h+='<div class="shop-item"><div class="shop-name">'+s.name+'</div><div class="shop-desc">'+s.desc+"</div>";
+      if(s.quote) h+='<div class="shop-quote">'+s.quote+"</div>";
+      if(s.dishes) h+='<div class="dishes"><strong> 推荐：</strong>'+s.dishes+'</div>';
+      h+='</div>';
+    });
+  }
+  h+='</div>';
+  return h;
+}
 function ts(id){var el=document.getElementById(id);if(!el)return;var t=document.querySelector('[data-target="'+id+'"]');if(!t)return;el.classList.toggle("show");t.classList.toggle("open")}
 
 var DAYS=[
@@ -179,7 +390,7 @@ var DAYS=[
 {id:1,label:"D1 到达",date:"6月16日",title:"到达 东郊记忆 望平街",color:"#ff9500",
 locations:[
 {name:"成都东站",lat:30.631,lng:104.157,type:"transport",time:"15:00",desc:"到达成都"},
-{name:"东城小居",lat:30.665,lng:104.110,type:"hotel",time:"16:00",desc:"成华区双桥路249号附18号"},
+{name:"正成·财富ID",lat:30.649,lng:104.088,type:"hotel",time:"16:00",desc:"锦江区东大街·牛市口附近，地铁2号线牛市口站"},
 {name:"东郊记忆",lat:30.670,lng:104.125,type:"spot",time:"17:00",desc:"工业风文创园，免费开放",
 detail:"废弃工厂改造的文创园\n周末有市集\n\n评论区实测：\n「本自贡人认证确实味道不错」30赞\n「氛围感拉满」",
 xhs:[{id:"68202196000000000303d1a4",label:"拍照攻略"}]},
@@ -189,7 +400,7 @@ xhs:[{id:"5ee49c99000000000101fc4b",label:"香香巷攻略"}]}
 ]},
 {id:2,label:"D2 芳华+芳草+玉林",date:"6月17日",title:"芳华街 芳草街 玉林路 玉林综合市场",color:"#007aff",
 locations:[
-{name:"东城小居出发",lat:30.665,lng:104.110,type:"transport",time:"09:30",desc:"睡到自然醒"},
+{name:"正成·财富ID出发",lat:30.649,lng:104.088,type:"transport",time:"09:30",desc:"睡到自然醒"},
 {name:"芳华街",lat:30.637,lng:104.058,type:"spot",time:"10:00",desc:"老社区里的文艺街区",
 detail:"评论区实测：\n「这家蛋烘糕我吃了30年了」9赞\n「要晚点去 早上9点来好多都没营业」6赞",
 xhs:[{id:"67c576ae000000000d015bd0",label:"芳华街攻略"}]},
@@ -208,7 +419,7 @@ xhs:[{id:"67501d50000000000201a01b",label:"夜游攻略"}]}
 ]},
 {id:3,label:"D3 都江堰",date:"6月18日",title:"都江堰一日深度游",color:"#af52de",
 locations:[
-{name:"成都 到 都江堰",lat:30.665,lng:104.110,type:"transport",time:"08:00",desc:"城际列车/打车（约1小时）",
+{name:"成都 到 都江堰",lat:30.649,lng:104.088,type:"transport",time:"08:00",desc:"城际列车/打车（约1小时）",
 detail:"路线选择：\nA）地铁2号线到犀浦 换乘城际列车到离堆公园站（推荐）\nB）直接打车（约1h，100-120元）"},
 {name:"都江堰景区",lat:31.003,lng:103.647,type:"spot",time:"09:30",desc:"世界文化遗产，两千年水利工程奇迹",
 detail:"门票80元，提前公众号预约\n「全程步行不用坐车」「3-4小时够逛」",
@@ -261,7 +472,7 @@ function ov(){
   '<div class="info-grid">'+
   '<div class="info-card"><div class="label">人数</div><div class="value">2人</div></div>'+
   '<div class="info-card"><div class="label">节奏</div><div class="value">深度逛吃，不赶场</div></div>'+
-  '<div class="info-card"><div class="label">住宿</div><div class="value">D1/D2 成华区双桥路<br>D3 都江堰北街<br>D4/D5 海椒市街</div></div>'+
+  '<div class="info-card"><div class="label">住宿</div><div class="value">D1/D2 正成·财富ID（锦江区）<br>D3 都江堰北街<br>D4/D5 海椒市街</div></div>'+
   '<div class="info-card"><div class="label">离开</div><div class="value">6.20 天府T2 17:00</div></div>'+
   '</div>'+
   '<div class="section-head">行程概览</div>'+
@@ -296,7 +507,7 @@ function ic(c,e){
   return L.divIcon({className:"",html:'<div style="width:26px;height:26px;border-radius:50%;background:'+c+';border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 6px rgba(0,0,0,.18)">'+(e||"")+'</div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]});
 }
 
-L.marker([H1.lat,H1.lng],{icon:ic("#ff9500",""),zIndexOffset:1000}).addTo(map).bindPopup("<b>D1/D2 酒店</b><br>成华区双桥路");
+L.marker([H1.lat,H1.lng],{icon:ic("#ff9500",""),zIndexOffset:1000}).addTo(map).bindPopup("<b>D1/D2 酒店</b><br>正成·财富ID（锦江区）");
 L.marker([H2.lat,H2.lng],{icon:ic("#ff9500",""),zIndexOffset:1000}).addTo(map).bindPopup("<b>D3 酒店</b><br>都江堰北街");
 L.marker([H3.lat,H3.lng],{icon:ic("#ff9500",""),zIndexOffset:1000}).addTo(map).bindPopup("<b>D4/D5 酒店</b><br>锦江区海椒市街4号");
 
@@ -337,19 +548,26 @@ function lc(loc,di){
   var lnk='<a href="'+amapLink+'" target="_blank" class="btn nav">导航</a>';
   if(loc.xhs)loc.xhs.forEach(function(x){lnk+=xb(x.id,x.label)});
   var sh="";
-  if(loc.name.indexOf("东郊记忆")>=0)sh=st("dj_"+di,SHOPS.dongjiao,"东郊记忆");
-  if(loc.name.indexOf("望平街")>=0)sh=st("wp_"+di,SHOPS.wangping,"望平街 香香巷");
-  if(loc.name.indexOf("芳华街")>=0)sh=st("fh_"+di,SHOPS.fanghua,"芳华街");
-  if(loc.name.indexOf("芳草街")>=0)sh=st("fc_"+di,SHOPS.fangcao,"芳草街店铺推荐");
-  if(loc.name.indexOf("玉林综合市场")>=0)sh=st("ym_"+di,SHOPS.yulin_market,"玉林综合市场美食");
-  if(loc.name.indexOf("玉林路")>=0&&loc.type==="food")sh=st("yl_"+di,SHOPS.yulin_road,"玉林路店铺推荐");
-  if(loc.name.indexOf("都江堰午餐")>=0)sh=st("djy_lunch_"+di,SHOPS.dujiangyan,"都江堰午餐美食");
-  if(loc.name.indexOf("都江堰晚餐")>=0)sh=st("djy_dinner_"+di,SHOPS.dujiangyan,"都江堰晚餐选择");
-  if(loc.name.indexOf("浣花溪")>=0)sh=st("hx_"+di,SHOPS.huaxi_tea,"浣花溪喝茶");
-  if(loc.name.indexOf("太古里")>=0)sh=st("tk_"+di,SHOPS.taikoo,"太古里");
-  if(loc.name.indexOf("九眼桥")>=0&&loc.type==="spot")sh=st("jyq_"+di,SHOPS.jiuyanqiao,"九眼桥");
-  if(loc.name.indexOf("海椒市")>=0&&loc.type==="food")sh=st("hjs_"+di,SHOPS.haijiao,"海椒市美食");
-  if(loc.name.indexOf("九眼桥")>=0&&loc.type==="food")sh=st("jyq_f_"+di,SHOPS.jiuyanqiao,"九眼桥附近");
+  var recKey=null;
+  if(loc.name.indexOf("正成")>=0||loc.name.indexOf("牛市口")>=0)recKey="正成·财富ID";
+  else if(loc.name.indexOf("东郊记忆")>=0)recKey="东郊记忆";
+  else if(loc.name.indexOf("望平街")>=0)recKey="望平街 香香巷";
+  else if(loc.name.indexOf("芳华街")>=0)recKey="芳华街";
+  else if(loc.name.indexOf("芳草街")>=0)recKey="芳草街";
+  else if(loc.name.indexOf("玉林综合市场")>=0)recKey="玉林综合市场";
+  else if(loc.name.indexOf("玉林路")>=0)recKey="玉林路";
+  else if(loc.name.indexOf("小酒馆")>=0)recKey="小酒馆";
+  else if(loc.name.indexOf("都江堰景区")>=0||loc.name.indexOf("都江堰午餐")>=0)recKey="都江堰景区";
+  else if(loc.name.indexOf("灌县古城")>=0||loc.name.indexOf("南桥")>=0)recKey="灌县古城";
+  else if(loc.name.indexOf("都江堰晚餐")>=0)recKey="都江堰住宿";
+  else if(loc.name.indexOf("都江堰住宿")>=0||loc.name.indexOf("北街38号")>=0)recKey="都江堰住宿";
+  else if(loc.name.indexOf("三星堆")>=0)recKey="三星堆博物馆";
+  else if(loc.name.indexOf("春熙路")>=0)recKey="春熙路";
+  else if(loc.name.indexOf("太古里")>=0)recKey="太古里";
+  else if(loc.name.indexOf("九眼桥")>=0)recKey="九眼桥";
+  else if(loc.name.indexOf("海椒市")>=0)recKey="海椒市";
+  else if(loc.name.indexOf("浣花溪")>=0)recKey="浣花溪喝茶";
+  if(recKey&&LOC_RECS[recKey])sh=recs("rec_"+di+"_"+recKey,LOC_RECS[recKey],recKey);
   return '<div class="tl-item"><div class="tl-dot '+dot+'"></div><div class="card" onclick="if(!event.target.closest(\'.btn,.links,.shop-toggle,.shop-list,.xhs-link\'))tg(\''+uid+'\')"><div class="time">'+(loc.time!=="-"?loc.time:"备选")+'</div><div class="name">'+bdg+" "+loc.name+'</div><div class="desc">'+loc.desc+"</div>"+(loc.budget?'<div class="budget">'+loc.budget+"</div>":"")+'<div class="links">'+lnk+"</div>"+(loc.detail?'<div class="details" id="'+uid+'">'+loc.detail.replace(/\n/g,"<br>")+"</div>":"")+sh+"</div></div>";
 }
 
@@ -358,8 +576,8 @@ function rd(di){
   if(!d)return "";
   var main=d.locations.filter(function(l){return l.time!=="-"});
   var h='<div class="day-head"><h2>'+d.title+'</h2><p>'+d.date+"</p></div>";
-  if(d.id===1)h+='<div class="route-bar"><strong>路线：</strong>成都东站 东城小居 东郊记忆 望平街 香香巷</div>';
-  if(d.id===2)h+='<div class="route-bar"><strong>路线：</strong>东城小居 芳华街 芳草街 玉林综合市场 玉林路 小酒馆</div>';
+  if(d.id===1)h+='<div class="route-bar"><strong>路线：</strong>成都东站 正成·财富ID 东郊记忆 望平街 香香巷</div>';
+  if(d.id===2)h+='<div class="route-bar"><strong>路线：</strong>正成·财富ID 芳华街 芳草街 玉林综合市场 玉林路 小酒馆</div>';
   if(d.id===3)h+='<div class="route-bar"><strong>路线：</strong>成都 都江堰景区 灌县古城 南桥 都江堰住宿</div>';
   if(d.id===4)h+='<div class="route-bar"><strong>路线：</strong>都江堰 三星堆 成都 浣花溪喝茶 海椒市 九眼桥</div>';
   if(main.length){h+='<div class="section-head">行程</div><div class="timeline">';main.forEach(function(l){h+=lc(l,di)});h+="</div>";}
