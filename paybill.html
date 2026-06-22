@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>成都5日游费用分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; background: #f5f7fa; color: #333; -webkit-text-size-adjust: 100%; }
+.container { max-width: 900px; margin: 0 auto; padding: 16px 14px; }
+h1 { text-align: center; font-size: 1.5em; margin-bottom: 4px; color: #1a1a2e; }
+.subtitle { text-align: center; color: #888; font-size: 0.8em; margin-bottom: 2px; }
+.settle-line { text-align: center; color: #764ba2; font-size: 0.8em; font-weight: 600; margin-bottom: 18px; }
+
+/* 总览 */
+.overview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
+.ov-card { background: #fff; border-radius: 10px; padding: 12px 8px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+.ov-card .num { font-size: 1.3em; font-weight: 700; }
+.ov-card .lbl { font-size: 0.7em; color: #999; margin-top: 2px; }
+.c1 { color: #667eea; } .c2 { color: #ff6384; } .c3 { color: #36a2eb; } .c4 { color: #ffce56; } .c5 { color: #4bc0c0; }
+/* 最后两个卡片占位 */
+.ov-card.empty { visibility: hidden; }
+
+/* 每日卡片 */
+.day-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; }
+.day-card { background: #fff; border-radius: 10px; padding: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); border-left: 3px solid #667eea; }
+.day-card .date { font-weight: 700; font-size: 0.85em; margin-bottom: 4px; }
+.day-card .day-total { font-size: 1.2em; font-weight: 700; color: #667eea; margin-bottom: 4px; }
+.day-card .day-items { font-size: 0.65em; color: #888; line-height: 1.5; }
+.day-card:nth-child(2) { border-left-color: #ff6384; }
+.day-card:nth-child(2) .day-total { color: #ff6384; }
+.day-card:nth-child(3) { border-left-color: #36a2eb; }
+.day-card:nth-child(3) .day-total { color: #36a2eb; }
+.day-card:nth-child(4) { border-left-color: #ffce56; }
+.day-card:nth-child(4) .day-total { color: #e6a800; }
+.day-card:nth-child(5) { border-left-color: #4bc0c0; }
+.day-card:nth-child(5) .day-total { color: #4bc0c0; grid-column: 1 / -1; }
+
+/* 图表 */
+.chart-section { background: #fff; border-radius: 10px; padding: 14px; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+.chart-section h2 { font-size: 0.95em; margin-bottom: 12px; color: #1a1a2e; }
+.chart-box { position: relative; width: 100%; margin-bottom: 8px; }
+.chart-box:last-child { margin-bottom: 0; }
+.chart-box canvas { width: 100% !important; height: auto !important; }
+
+/* TOP */
+.top-list { list-style: none; }
+.top-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.85em; }
+.top-list li:last-child { border-bottom: none; }
+.top-rank { display: inline-block; width: 20px; height: 20px; border-radius: 50%; text-align: center; line-height: 20px; font-size: 0.7em; font-weight: 700; color: #fff; margin-right: 8px; flex-shrink: 0; }
+.r1 { background: #ff6384; } .r2 { background: #36a2eb; } .r3 { background: #ffce56; color: #333; }
+.r4 { background: #4bc0c0; } .r5 { background: #999; }
+.top-amt { font-weight: 700; color: #667eea; white-space: nowrap; margin-left: 8px; }
+.top-meta { color: #999; font-size: 0.75em; }
+.top-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 明细表 */
+.detail-section { background: #fff; border-radius: 10px; padding: 14px; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+.detail-section h2 { font-size: 0.95em; margin-bottom: 10px; color: #1a1a2e; }
+.tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.tab { padding: 5px 12px; border-radius: 16px; border: 1px solid #ddd; background: #fff; cursor: pointer; font-size: 0.8em; transition: all 0.2s; }
+.tab.active { background: #667eea; color: #fff; border-color: #667eea; }
+table { width: 100%; border-collapse: collapse; font-size: 0.8em; }
+th { background: #f8f9fa; padding: 8px 10px; text-align: left; font-weight: 600; color: #666; border-bottom: 2px solid #eee; font-size: 0.9em; }
+td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; }
+tr:hover { background: #f8f9ff; }
+.total-row { font-weight: 700; background: #f8f9fa !important; }
+.amt-cell { text-align: right; font-variant-numeric: tabular-nums; }
+.cat-tag { display: inline-block; padding: 1px 6px; border-radius: 8px; font-size: 0.75em; color: #fff; }
+.cat-餐费 { background: #ff6384; } .cat-通行 { background: #36a2eb; }
+.cat-住宿 { background: #ffce56; color: #333; } .cat-门票 { background: #4bc0c0; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🐼 成都5日游费用分析报告</h1>
+<p class="subtitle">2026.06.16 - 06.20 · 34笔消费 · 2人同行</p>
+<p class="settle-line">💰 phl 还需支付 sbb ¥1,508.95</p>
+
+<div class="overview">
+  <div class="ov-card"><div class="num c1">¥3,802</div><div class="lbl">总费用</div></div>
+  <div class="ov-card"><div class="num c2">¥760</div><div class="lbl">日均花费</div></div>
+  <div class="ov-card"><div class="num c3">¥1,901</div><div class="lbl">人均花费</div></div>
+  <div class="ov-card"><div class="num c4">34</div><div class="lbl">消费笔数</div></div>
+  <div class="ov-card"><div class="num c5">¥112</div><div class="lbl">笔均金额</div></div>
+  <div class="ov-card empty"></div>
+</div>
+
+<h2 style="font-size:0.95em;margin-bottom:10px;color:#1a1a2e;">📅 每日花费概览</h2>
+<div class="day-cards" id="dayCards"></div>
+
+<div class="chart-section">
+  <h2>📊 消费分类占比</h2>
+  <div class="chart-box"><canvas id="catPie"></canvas></div>
+</div>
+
+<div class="chart-section">
+  <h2>📊 每日消费构成</h2>
+  <div class="chart-box"><canvas id="dailyStack"></canvas></div>
+</div>
+
+<div class="chart-section">
+  <h2>📈 每日分类消费明细</h2>
+  <div class="chart-box"><canvas id="dailyCatBar"></canvas></div>
+</div>
+
+<div class="chart-section">
+  <h2>📉 累计花费走势</h2>
+  <div class="chart-box"><canvas id="cumLine"></canvas></div>
+</div>
+
+<div class="chart-section">
+  <h2>🔥 单笔消费 TOP 5</h2>
+  <ul class="top-list" id="topList"></ul>
+</div>
+
+<div class="detail-section">
+  <h2>📋 全部消费明细</h2>
+  <div class="tabs">
+    <div class="tab active" onclick="filterTable('all',this)">全部</div>
+    <div class="tab" onclick="filterTable('餐费',this)">🍜 餐费</div>
+    <div class="tab" onclick="filterTable('通行',this)">🚗 通行</div>
+    <div class="tab" onclick="filterTable('住宿',this)">🏨 住宿</div>
+    <div class="tab" onclick="filterTable('门票',this)">🎫 门票</div>
+  </div>
+  <table>
+    <thead><tr><th>日期</th><th>分类</th><th>名称</th><th style="text-align:right">金额</th></tr></thead>
+    <tbody id="detailBody"></tbody>
+  </table>
+</div>
+</div>
+
+<script>
+const data = [
+  {d:"06-16",cat:"餐费",name:"烧烤",amt:125},
+  {d:"06-16",cat:"住宿",name:"16-17住宿",amt:211},
+  {d:"06-17",cat:"餐费",name:"北三街火锅",amt:23.9},
+  {d:"06-17",cat:"餐费",name:"北三街火锅",amt:122},
+  {d:"06-17",cat:"餐费",name:"手撕兔",amt:35},
+  {d:"06-17",cat:"餐费",name:"沈堂甜皮鸭",amt:34},
+  {d:"06-17",cat:"餐费",name:"饮料",amt:22},
+  {d:"06-17",cat:"餐费",name:"蛋烘糕",amt:11},
+  {d:"06-18",cat:"餐费",name:"早餐",amt:12},
+  {d:"06-18",cat:"门票",name:"都江堰门票",amt:160},
+  {d:"06-18",cat:"门票",name:"三星堆门票",amt:144},
+  {d:"06-18",cat:"通行",name:"三星堆大巴",amt:40},
+  {d:"06-18",cat:"通行",name:"都江堰城际",amt:38},
+  {d:"06-18",cat:"通行",name:"打车",amt:3.8},
+  {d:"06-18",cat:"通行",name:"打车",amt:7},
+  {d:"06-18",cat:"餐费",name:"鸿运饭店",amt:84},
+  {d:"06-18",cat:"餐费",name:"跷脚牛肉",amt:97},
+  {d:"06-18",cat:"餐费",name:"饮料",amt:24},
+  {d:"06-18",cat:"住宿",name:"都江堰住宿",amt:87},
+  {d:"06-19",cat:"通行",name:"打车",amt:77},
+  {d:"06-19",cat:"通行",name:"打车",amt:20},
+  {d:"06-19",cat:"门票",name:"三星堆讲解",amt:90},
+  {d:"06-19",cat:"餐费",name:"人民公园喝茶",amt:75},
+  {d:"06-19",cat:"餐费",name:"蹄花",amt:74},
+  {d:"06-19",cat:"餐费",name:"早餐",amt:8},
+  {d:"06-19",cat:"餐费",name:"兔火锅",amt:119},
+  {d:"06-19",cat:"餐费",name:"饮料",amt:18},
+  {d:"06-19",cat:"住宿",name:"四月天民宿",amt:122},
+  {d:"06-20",cat:"通行",name:"湛江机场打车",amt:43},
+  {d:"06-20",cat:"通行",name:"打车",amt:22},
+  {d:"06-20",cat:"通行",name:"湛江机场回高州",amt:99},
+  {d:"06-20",cat:"通行",name:"回湛江机票",amt:1640},
+  {d:"06-20",cat:"餐费",name:"冷锅鱼",amt:103},
+  {d:"06-20",cat:"餐费",name:"蜜雪冰城",amt:11.4},
+];
+
+const catColors = {餐费:"#ff6384",通行:"#36a2eb",住宿:"#ffce56",门票:"#4bc0c0"};
+const days = ["06-16","06-17","06-18","06-19","06-20"];
+const dayLabels = ["D1·6/16","D2·6/17","D3·6/18","D4·6/19","D5·6/20"];
+
+const daily = {};
+days.forEach(d => daily[d] = []);
+data.forEach(r => daily[r.d].push(r));
+
+// 每日卡片
+const cardBox = document.getElementById('dayCards');
+days.forEach((d,i) => {
+  const items = daily[d];
+  const total = items.reduce((s,r)=>s+r.amt,0);
+  const catSummary = {};
+  items.forEach(r => { catSummary[r.cat] = (catSummary[r.cat]||0) + r.amt; });
+  const summaryStr = Object.entries(catSummary).map(([k,v])=>`${k}¥${v.toFixed(0)}`).join(' · ');
+  const topItem = items.sort((a,b)=>b.amt-a.amt)[0];
+  cardBox.innerHTML += `<div class="day-card">
+    <div class="date">${dayLabels[i]}</div>
+    <div class="day-total">¥${total.toFixed(0)}</div>
+    <div class="day-items">${summaryStr}<br>最大：${topItem.name}¥${topItem.amt.toFixed(0)}</div>
+  </div>`;
+});
+
+// Chart.js 全局配置：手机适配
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+Chart.defaults.plugins.legend.labels.padding = 8;
+Chart.defaults.plugins.title.font = { size: 13, weight: 'bold' };
+Chart.defaults.maintainAspectRatio = true;
+
+const cats = ["餐费","通行","住宿","门票"];
+const dailyCatData = {};
+cats.forEach(c => { dailyCatData[c] = days.map(d => daily[d].filter(r=>r.cat===c).reduce((s,r)=>s+r.amt,0)); });
+
+// 分类饼图
+const catTotals = {};
+data.forEach(r => { catTotals[r.cat] = (catTotals[r.cat]||0) + r.amt; });
+new Chart(document.getElementById('catPie'), {
+  type: 'doughnut',
+  data: { labels: Object.keys(catTotals), datasets: [{ data: Object.values(catTotals), backgroundColor: Object.keys(catTotals).map(k=>catColors[k]) }] },
+  options: { responsive: true, aspectRatio: 1.3, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => ctx.label + ' ¥' + ctx.parsed.toFixed(0) + ' (' + (ctx.parsed/3802.1*100).toFixed(1) + '%)' } } } }
+});
+
+// 每日堆叠
+new Chart(document.getElementById('dailyStack'), {
+  type: 'bar',
+  data: { labels: dayLabels, datasets: cats.map(c => ({label:c, data:dailyCatData[c], backgroundColor:catColors[c]})) },
+  options: { responsive: true, aspectRatio: 1.5, plugins:{legend:{position:'bottom'},title:{display:true,text:'每日消费构成'}}, scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>'¥'+v}}} }
+});
+
+// 每日分类
+new Chart(document.getElementById('dailyCatBar'), {
+  type: 'bar',
+  data: { labels: dayLabels, datasets: cats.map(c => ({label:c, data:dailyCatData[c], backgroundColor:catColors[c]})) },
+  options: { responsive: true, aspectRatio: 1.5, plugins:{legend:{position:'bottom'},title:{display:true,text:'每日各分类消费'}}, scales:{y:{ticks:{callback:v=>'¥'+v}}} }
+});
+
+// 累计曲线
+let cum = [], running = 0;
+days.forEach(d => { running += daily[d].reduce((s,r)=>s+r.amt,0); cum.push(running); });
+new Chart(document.getElementById('cumLine'), {
+  type: 'line',
+  data: { labels: dayLabels, datasets: [{ label:'累计花费', data:cum, borderColor:'#667eea', backgroundColor:'rgba(102,126,234,0.1)', fill:true, tension:0.3, pointRadius:5, pointBackgroundColor:'#667eea', borderWidth:2 }] },
+  options: { responsive: true, aspectRatio: 1.8, plugins:{legend:{position:'bottom'},title:{display:true,text:'累计花费走势'},tooltip:{callbacks:{label:ctx=>'¥'+ctx.parsed.y.toFixed(0)}}}, scales:{y:{ticks:{callback:v=>'¥'+v}}} }
+});
+
+// TOP5
+const sorted = [...data].sort((a,b)=>b.amt-a.amt).slice(0,5);
+const topBox = document.getElementById('topList');
+sorted.forEach((r,i) => {
+  topBox.innerHTML += `<li><span class="top-rank r${i+1}">${i+1}</span><span class="top-name">${r.name}<span class="top-meta"> ${r.d}·${r.cat}</span></span><span class="top-amt">¥${r.amt.toFixed(0)}</span></li>`;
+});
+
+// 明细表
+function renderTable(filter) {
+  const rows = filter === 'all' ? data : data.filter(r => r.cat === filter);
+  let html = '', total = 0;
+  rows.forEach(r => {
+    total += r.amt;
+    html += `<tr><td>${r.d}</td><td><span class="cat-tag cat-${r.cat}">${r.cat}</span></td><td>${r.name}</td><td class="amt-cell">¥${r.amt.toFixed(1)}</td></tr>`;
+  });
+  html += `<tr class="total-row"><td colspan="3">合计 (${rows.length}笔)</td><td class="amt-cell">¥${total.toFixed(1)}</td></tr>`;
+  document.getElementById('detailBody').innerHTML = html;
+}
+function filterTable(cat, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderTable(cat);
+}
+renderTable('all');
+</script>
+</body>
+</html>
